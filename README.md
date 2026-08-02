@@ -16,6 +16,7 @@
    - 补充富途交易相关域名：`futuapi.com`、`futuin.com`、`futuhk1.com`、`futuhongkong.com`、`qtlcdn.com`
    - 补充长桥交易相关域名：`lbkrs.com`、`longbridge.app`、`longportapp.com`
    - 合并 Arthur-vx Broker 规则中的精确 API / 交易域名、IP 段、TradeUP 和 Schwab 域名
+   - 补充雪盈证券 / Snowball X 官方及 OpenAPI 域名
 - Google AI 相关规则已并入 `Google.list`
 - `🔍 谷歌服务` 默认走日本节点，同时提供香港节点作为手动可选分区，便于在不同网络环境下切换。
 - 新增 `ApplePush.list`
@@ -91,7 +92,7 @@
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - `Apple.list` 基于 blackmatrix7 Apple 规则，并补充 iCloud Photos / Apple CDN 直连域名
-- `HK_Broker.list` 补充富途 / moomoo / 长桥 / 老虎 / TradeUP / Schwab 证券域名及交易 IP 段
+- `HK_Broker.list` 补充富途 / moomoo / 长桥 / 老虎 / 雪盈 / TradeUP / Schwab 证券域名及交易 IP 段
 
 ## 其他特性
 

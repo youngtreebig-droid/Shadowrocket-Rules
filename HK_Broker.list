@@ -1,5 +1,5 @@
 # NAME: HK_Broker
-# DESC: HK/US broker services for Futu, Moomoo, Longbridge, and Tiger Brokers
+# DESC: HK/US broker services for Futu, Moomoo, Longbridge, Tiger Brokers, and Snowball X
 
 # Futu - core domains
 DOMAIN-SUFFIX,futu.link
@@ -179,6 +179,16 @@ DOMAIN-SUFFIX,tigerbbs.com
 DOMAIN-SUFFIX,xiaohu8.com
 DOMAIN-SUFFIX,zhijianfengyi.cn
 DOMAIN-SUFFIX,zhijianfengyi.com
+
+# Snowball X / Snowball Securities - official and OpenAPI endpoints
+DOMAIN-SUFFIX,snowball-x.com
+DOMAIN-SUFFIX,snowballsecurities.com
+DOMAIN-SUFFIX,snbsecurities.com
+DOMAIN,cn.snowball-x.com
+DOMAIN,www.snowballsecurities.com
+DOMAIN,open.snowballsecurities.com
+DOMAIN,openapi.snbsecurities.com
+DOMAIN,sandbox.snbsecurities.com
 
 # US brokers - Schwab
 DOMAIN-SUFFIX,schwab.com
