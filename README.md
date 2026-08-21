@@ -2,35 +2,6 @@
 
 一份开箱即用的 Shadowrocket 规则配置，导入后添加自己的节点或订阅即可使用。
 
-## 当前重点
-
-- 优化 DNS 防泄露
-   - 代理域名默认通过代理访问 Cloudflare DoH，备用使用 Google DoH
-   - 代理 DNS 不回退系统 DNS，避免代理域名查询从本地网络泄露
-   - 直连域名使用系统 DNS，改善国内服务和 CDN 调度
-   - 扩展常见硬编码 DNS 劫持范围
-   - 新增 blackmatrix7 `BlockHttpDNS`，拦截 App 内置 HTTPDNS
-- 新增 `HK_Broker.list`
-   - 补充富途 / moomoo / 长桥券商域名
-   - 合并老虎证券域名，不再依赖外部券商规则
-   - 补充富途交易相关域名：`futuapi.com`、`futuin.com`、`futuhk1.com`、`futuhongkong.com`、`qtlcdn.com`
-   - 补充长桥交易相关域名：`lbkrs.com`、`longbridge.app`、`longportapp.com`
-   - 合并 Arthur-vx Broker 规则中的精确 API / 交易域名、IP 段、TradeUP 和 Schwab 域名
-   - 补充雪盈证券 / Snowball X 官方及 OpenAPI 域名
-   - 补充盈透证券 / Interactive Brokers 官方域名
-- 新增香港银行分流
-   - 汇丰香港及 Reward+ 默认使用香港节点
-   - 其他香港银行默认直连，减少代理 IP 变化带来的风控风险
-   - 美国运通因不同地区共用主域名，不纳入自动分流
-- Google AI 相关规则已并入 `Google.list`
-- `🔍 谷歌服务` 默认走日本节点，同时提供香港节点作为手动可选分区，便于在不同网络环境下切换。
-- 新增 `ApplePush.list`
-   - 将 Apple Push Notification service 相关域名优先归入 `🍎 苹果推送`
-   - 改善 X、Telegram 等 App 在部分网络环境下无法及时收到推送的问题。
-- 本仓库维护 `Apple.list`
-   - 基于 blackmatrix7 的 Apple 规则
-   - 补充 iCloud Photos、CloudKit、Apple CDN 相关域名，优化 iCloud 照片同步。
-
 ## 默认策略
 
 | 服务 | 默认策略 | 可选策略 |
@@ -102,6 +73,35 @@
 - `Apple.list` 基于 blackmatrix7 Apple 规则，并补充 iCloud Photos / Apple CDN 直连域名
 - `HK_Broker.list` 补充富途 / moomoo / 长桥 / 老虎 / 雪盈 / 盈透 / TradeUP / Schwab 证券域名及交易 IP 段
 - `HSBC_HK.list` 与 `HK_Banks_Direct.list` 收录香港银行网站及 App 服务域名
+
+## 当前重点
+
+- 优化 DNS 防泄露
+   - 代理域名默认通过代理访问 Cloudflare DoH，备用使用 Google DoH
+   - 代理 DNS 不回退系统 DNS，避免代理域名查询从本地网络泄露
+   - 直连域名使用系统 DNS，改善国内服务和 CDN 调度
+   - 扩展常见硬编码 DNS 劫持范围
+   - 新增 blackmatrix7 `BlockHttpDNS`，拦截 App 内置 HTTPDNS
+- 新增 `HK_Broker.list`
+   - 补充富途 / moomoo / 长桥券商域名
+   - 合并老虎证券域名，不再依赖外部券商规则
+   - 补充富途交易相关域名：`futuapi.com`、`futuin.com`、`futuhk1.com`、`futuhongkong.com`、`qtlcdn.com`
+   - 补充长桥交易相关域名：`lbkrs.com`、`longbridge.app`、`longportapp.com`
+   - 合并 Arthur-vx Broker 规则中的精确 API / 交易域名、IP 段、TradeUP 和 Schwab 域名
+   - 补充雪盈证券 / Snowball X 官方及 OpenAPI 域名
+   - 补充盈透证券 / Interactive Brokers 官方域名
+- 新增香港银行分流
+   - 汇丰香港及 Reward+ 默认使用香港节点
+   - 其他香港银行默认直连，减少代理 IP 变化带来的风控风险
+   - 美国运通因不同地区共用主域名，不纳入自动分流
+- Google AI 相关规则已并入 `Google.list`
+- `🔍 谷歌服务` 默认走日本节点，同时提供香港节点作为手动可选分区，便于在不同网络环境下切换。
+- 新增 `ApplePush.list`
+   - 将 Apple Push Notification service 相关域名优先归入 `🍎 苹果推送`
+   - 改善 X、Telegram 等 App 在部分网络环境下无法及时收到推送的问题。
+- 本仓库维护 `Apple.list`
+   - 基于 blackmatrix7 的 Apple 规则
+   - 补充 iCloud Photos、CloudKit、Apple CDN 相关域名，优化 iCloud 照片同步。
 
 ## 其他特性
 
