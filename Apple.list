@@ -11,6 +11,7 @@
 # TOTAL: 1610
 
 # > iCloud Photos / CloudKit / Apple CDN (supplement)
+DOMAIN-SUFFIX,apple.com
 DOMAIN-SUFFIX,icloud.com
 DOMAIN-SUFFIX,icloud-content.com
 DOMAIN-SUFFIX,icloud.com.cn
