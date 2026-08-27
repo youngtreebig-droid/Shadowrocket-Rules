@@ -1,136 +1,151 @@
-# Shadowrocket 配置文件
+# Shadowrocket Rules
 
-一份开箱即用的 Shadowrocket 规则配置，导入后添加自己的节点或订阅即可使用。
+面向 iOS Shadowrocket 的规则配置。导入配置后，在 Shadowrocket 首页添加自己的节点或订阅即可使用。
 
-## 默认策略
+> 当前版本：2026-08-27
+> 当前仓库：[`youngtreebig-droid/Shadowrocket-Rules`](https://github.com/youngtreebig-droid/Shadowrocket-Rules)
+> 源仓库：[`LingJingMaster/Shadowrocket-Rules`](https://github.com/LingJingMaster/Shadowrocket-Rules)
 
-| 服务 | 默认策略 | 可选策略 |
-|------|----------|----------|
-| 🧱 DNS 防泄露 | REJECT | 节点选择、DIRECT |
-| 🔍 谷歌服务 | 🇯🇵 日本节点 | 🇭🇰 香港节点、节点选择、PROXY、DIRECT |
-| 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT |
-| 🍎 苹果推送 | 🚀 节点选择 | PROXY、DIRECT |
-| 🍏 苹果服务 | DIRECT | 节点选择、PROXY |
-| 🏦 汇丰香港 | 🇭🇰 香港节点 | DIRECT、节点选择、PROXY |
-| 🏦 香港银行 | DIRECT | 香港节点、节点选择、PROXY |
-| 📈 券商服务 | 🇭🇰 香港节点 | DIRECT、节点选择、PROXY |
-| 🌍 非中国 | PROXY | 节点选择、DIRECT、日本节点 |
-| 🐟 漏网之鱼 | PROXY | 节点选择、DIRECT、日本节点 |
+配置文件不包含任何代理节点信息；节点和订阅只保存在你自己的 Shadowrocket 中。
+
+## 配置入口
+
+配置文件 Raw 链接：
+
+```text
+https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Shadowrocket.conf
+```
+
+也可以扫描下面的二维码导入：
+
+<img width="240" height="240" alt="Shadowrocket 配置二维码" src="assets/shadowrocket-config-qr.png" />
+
+二维码和 Raw 链接都指向当前仓库 `main` 分支的 `Shadowrocket.conf`。配置更新并推送到 `main` 后，Shadowrocket 的 `update-url` 会继续使用这个地址。
 
 ## 快速开始
 
-1. 复制配置文件的 Raw 链接：
-   `https://raw.githubusercontent.com/LingJingMaster/Shadowrocket-Rules/refs/heads/main/Shadowrocket.conf`
-2. 打开 Shadowrocket → 配置 → 右上角 `+` → 粘贴链接 → 下载
-3. 点击已下载的配置，设为使用中（✔️）
-4. 首页添加你自己的节点或订阅
-5. 连通性测试，选择可用节点连接
+1. 打开 Shadowrocket → **配置** → 右上角 **+**。
+2. 粘贴上面的 Raw 链接并下载配置。
+3. 点击下载的配置，选择**使用中**。
+4. 返回首页，添加自己的节点或订阅。
+5. 在 `Proxy`、`🚀 节点选择` 或地区策略组中手动选择节点。
+6. 测试连接并启用 Shadowrocket。
 
-或者扫描二维码
+## 本配置的主要行为
 
-<img width="200" height="200" alt="ctool-2026-02-26-17-13-16" src="https://github.com/user-attachments/assets/22f1b4f7-3265-493c-9e5a-2b662924ed2f" />
+- **MissAV**：域名中包含 `missav` 的请求匹配 `DOMAIN-KEYWORD,missav`，默认进入 `🇺🇸 美国节点`。
+- **手动固定节点**：`Proxy` 和所有地区策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
+- **Proxy 组**：新增 `Proxy` 手动代理组，自动收集已添加的节点，解决没有独立代理组供 `Select Proxy` 选择的问题。
+- **主节点选择**：`🚀 节点选择` 默认选择 `Proxy`，也可以切换到香港、台湾、日本、美国或其他节点组。
+- **地区识别**：地区组依据节点名称关键词匹配，请保证节点名称包含 `HK`、`香港`、`🇭🇰`、`US`、`美国` 等标识。
 
-## 策略组说明
+## 策略组
 
-| 策略组 | 类型 | 说明 |
-|--------|------|------|
-| 🚀 节点选择 | 手动选择 | 主策略，可选内置代理、地区分组或直连 |
-| 🇭🇰 香港节点 | 自动测速 | 按节点名关键词匹配香港节点 |
-| 🇹🇼 台湾节点 | 自动测速 | 按节点名关键词匹配台湾节点 |
-| 🇯🇵 日本节点 | 自动测速 | 按节点名关键词匹配日本节点 |
-| 🇺🇸 美国节点 | 自动测速 | 按节点名关键词匹配美国节点 |
-| 🌐 其他节点 | 自动测速 | 匹配不属于以上地区的节点 |
+| 策略组 | 类型 | 默认选择 | 说明 |
+|---|---|---|---|
+| `Proxy` | `select` | 第一个节点 | 汇总已添加的节点，手动固定选择 |
+| `🚀 节点选择` | `select` | `Proxy` | 主策略组 |
+| `🇭🇰 香港节点` | `select` | 第一个匹配节点 | 按节点名称匹配香港节点 |
+| `🇹🇼 台湾节点` | `select` | 第一个匹配节点 | 按节点名称匹配台湾节点 |
+| `🇯🇵 日本节点` | `select` | 第一个匹配节点 | 按节点名称匹配日本节点 |
+| `🇺🇸 美国节点` | `select` | 第一个匹配节点 | 按节点名称匹配美国节点 |
+| `🌐 其他节点` | `select` | 第一个匹配节点 | 匹配未归入上述地区的节点 |
 
-## 分流规则
+`PROXY` 是规则语法中的通用代理策略标识，不等于配置中声明的 `Proxy` 策略组。本配置显式声明了 `Proxy` 组，并将相关默认目标改为该 `select` 组，便于手动固定节点。
 
-规则从上到下依次匹配。`🔍 谷歌服务` 优先级高于 `🤖 AI 服务`，因此 Gemini 会走谷歌服务策略组。
+## 分流规则优先级
+
+规则按从上到下的顺序匹配：
 
 | 优先级 | 服务 | 默认策略 |
-|--------|------|----------|
-| 1 | 🧱 DNS 防泄露（HTTPDNS） | REJECT |
-| 2 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港节点 |
-| 3 | 🤖 AI 服务（ChatGPT、Claude 等） | 美国节点 |
-| 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
-| 5 | 🔒 哔哩哔哩 | DIRECT |
-| 6 | 🏠 私有网络 / 局域网 | DIRECT |
-| 7 | 📲 电报消息 | 节点选择 |
-| 8 | 🐱 代码托管（GitHub、GitLab、Atlassian） | 节点选择 |
-| 9 | Ⓜ️ 微软服务 | 节点选择 |
-| 10 | 🏦 汇丰香港（含 Reward+） | 香港节点 |
-| 11 | 🏦 其他香港银行 | DIRECT |
-| 12 | 📈 券商服务（富途 / moomoo / 长桥 / 老虎 / 雪盈 / 盈透） | 香港节点 |
-| 13 | 🍎 苹果推送 | 节点选择 |
-| 14 | 🍏 苹果服务 | DIRECT |
-| 15 | 🔒 国内服务 | DIRECT |
-| 16 | 🌍 非中国（境外流量） | PROXY |
-| 17 | GEOIP CN | DIRECT |
-| 18 | 🐟 漏网之鱼（兜底） | PROXY |
+|---:|---|---|
+| 1 | DNS 防泄露 / HTTPDNS | `REJECT` |
+| 2 | 域名中含 `missav` | `🇺🇸 美国节点` |
+| 3 | 谷歌服务（含 Gemini） | `🇯🇵 日本节点` |
+| 4 | AI 服务（ChatGPT、Claude 等） | `🇺🇸 美国节点` |
+| 5 | 油管视频 | `🚀 节点选择` |
+| 6 | 哔哩哔哩 | `🔒 国内服务` |
+| 7 | 私有网络 / 局域网 | `🏠 私有网络` |
+| 8 | 电报消息 | `📲 电报消息` |
+| 9 | GitHub、GitLab、Atlassian | `🐱 代码托管` |
+| 10 | 微软服务 | `Ⓜ️ 微软服务` |
+| 11 | 汇丰香港及 Reward+ | `🏦 汇丰香港` |
+| 12 | 其他香港银行 | `🏦 香港银行` |
+| 13 | 券商服务 | `📈 券商服务` |
+| 14 | Apple Push | `🍎 苹果推送` |
+| 15 | 其他苹果服务 | `🍏 苹果服务` |
+| 16 | 国内服务 | `🔒 国内服务` |
+| 17 | 其他境外流量 | `🌍 非中国` |
+| 18 | 中国大陆 IP | `🔒 国内服务` |
+| 19 | 未匹配流量 | `🐟 漏网之鱼` |
 
-## 规则集来源
+Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则的域名优先使用 `🔍 谷歌服务`。
 
-- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集
-- [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
-- `Apple.list` 基于 blackmatrix7 Apple 规则，并补充 iCloud Photos / Apple CDN 直连域名
-- `HK_Broker.list` 补充富途 / moomoo / 长桥 / 老虎 / 雪盈 / 盈透 / TradeUP / Schwab 证券域名及交易 IP 段
-- `HSBC_HK.list` 与 `HK_Banks_Direct.list` 收录香港银行网站及 App 服务域名
+## 本仓库维护的规则集
 
-## 当前重点
+下面这些文件使用当前仓库的 Raw 地址，修改后会随 `main` 分支更新：
 
-- 优化 DNS 防泄露
-   - 代理域名默认通过代理访问 Cloudflare DoH，备用使用 Google DoH
-   - 代理 DNS 不回退系统 DNS，避免代理域名查询从本地网络泄露
-   - 直连域名使用系统 DNS，改善国内服务和 CDN 调度
-   - 扩展常见硬编码 DNS 劫持范围
-   - 新增 blackmatrix7 `BlockHttpDNS`，拦截 App 内置 HTTPDNS
-- 新增 `HK_Broker.list`
-   - 补充富途 / moomoo / 长桥券商域名
-   - 合并老虎证券域名，不再依赖外部券商规则
-   - 补充富途交易相关域名：`futuapi.com`、`futuin.com`、`futuhk1.com`、`futuhongkong.com`、`qtlcdn.com`
-   - 补充长桥交易相关域名：`lbkrs.com`、`longbridge.app`、`longportapp.com`
-   - 合并 Arthur-vx Broker 规则中的精确 API / 交易域名、IP 段、TradeUP 和 Schwab 域名
-   - 补充雪盈证券 / Snowball X 官方及 OpenAPI 域名
-   - 补充盈透证券 / Interactive Brokers 官方域名
-- 新增香港银行分流
-   - 汇丰香港及 Reward+ 默认使用香港节点
-   - 其他香港银行默认直连，减少代理 IP 变化带来的风控风险
-   - 美国运通因不同地区共用主域名，不纳入自动分流
-- Google AI 相关规则已并入 `Google.list`
-- `🔍 谷歌服务` 默认走日本节点，同时提供香港节点作为手动可选分区，便于在不同网络环境下切换。
-- 新增 `ApplePush.list`
-   - 将 Apple Push Notification service 相关域名优先归入 `🍎 苹果推送`
-   - 改善 X、Telegram 等 App 在部分网络环境下无法及时收到推送的问题。
-- 本仓库维护 `Apple.list`
-   - 基于 blackmatrix7 的 Apple 规则
-   - 补充 iCloud Photos、CloudKit、Apple CDN 相关域名，优化 iCloud 照片同步。
+| 文件 | Raw 地址 |
+|---|---|
+| `Google.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Google.list` |
+| `AI.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/AI.list` |
+| `HSBC_HK.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HSBC_HK.list` |
+| `HK_Banks_Direct.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Banks_Direct.list` |
+| `HK_Broker.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Broker.list` |
+| `ApplePush.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/ApplePush.list` |
+| `Apple.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Apple.list` |
 
-## 其他特性
+其他公共规则集主要来自：
 
-- DNS：代理域名使用经代理转发的 Cloudflare / Google DoH，直连域名使用系统 DNS
-- DNS 劫持：拦截常见硬编码 53 端口 DNS，防止应用绕过规则
-- HTTPDNS 拦截：引用 blackmatrix7 `BlockHttpDNS`，阻止 App 通过内置 HTTPDNS 绕过系统解析
-- QUIC 屏蔽：对代理连接屏蔽 UDP/443，强制回退 HTTP/2
-- 本地服务保护：`localhost.weixin.qq.com` 固定解析到 `127.0.0.1` 并强制直连，避免 fake-IP 影响微信本地回调
-- 腾讯云 IM：`shortconn.im.qcloud.com` 前置归入国内服务，避免被券商分流规则误挂到香港节点
-- TUN 直连优化：iCloud Photos / CloudKit / Apple CDN 域名使用系统 DNS 并跳过代理，保留 Apple Push 走代理
-- Apple 分流一致性：Apple Push 域名与 TCP 5223 优先走苹果推送；其余 `apple.com` 服务归入苹果服务，避免因解析 IP 不同而在直连与代理间漂移
-- 豆包服务：`doubao.com` 明确直连，避免语音及输入法接口因解析 IP 不同而改变出口
-- DNS 上游：Cloudflare DoH 为主、Google DoH 为备用，均通过代理连接；代理解析不回退系统 DNS
-- 局域网解析保护：`*.in-addr.arpa`、`*.ip6.arpa`、`*.local` 前置直连并交给系统解析，补充常见 DNS-SD 反查模式，避免 Bonjour / PTR 反查打到公共 DoH
-- TUN 边界：保留 `198.18.0.0/15` 给 fake-IP / TUN 内部使用，不加入排除路由，私网桥接网段仍通过 `10.0.0.0/8`、`192.168.0.0/16` 等排除
-- Apple 推送：默认走代理
-   - `push.apple.com`
-   - `gateway.push.apple.com`
-   - `api.push.apple.com`
-   - `sandbox.push.apple.com` 
-- Google 防跳转：`google.cn` / `g.cn` 自动 302 到 `google.com`
-- MITM：仅解密 `*.google.cn`
+- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
+- [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules)
 
-## 注意事项
+## 上游更新与合并
 
-- 地区分组通过节点名称关键词自动匹配，请确保你的节点名称包含地区标识（如 🇭🇰、HK、香港等）
-- 银行服务对出口 IP 稳定性较敏感；使用香港代理时，建议尽量保持同一节点
-- Google、AI、非中国和漏网之鱼的默认出口可在 App 内手动切换
-- 如需 HTTPS 解密功能，请在 Shadowrocket 中生成并安装 CA 证书
+### Fork 不会自动同步
+
+GitHub 的 fork 不会因为源仓库更新而自动修改本仓库。当前关系是：
+
+- `origin`：你的仓库 `youngtreebig-droid/Shadowrocket-Rules`
+- `upstream`：源仓库 `LingJingMaster/Shadowrocket-Rules`
+
+在 GitHub 网页端可以打开本仓库，点击 **Sync fork → Update branch**。没有冲突时 GitHub 会直接同步；有冲突时需要手动处理。
+
+本地同步方式：
+
+```bash
+git remote add upstream https://github.com/LingJingMaster/Shadowrocket-Rules.git
+git fetch upstream
+git switch main
+git merge upstream/main
+# 解决冲突后：
+git add .
+git commit
+git push origin main
+```
+
+### 我的修改会不会自动合并
+
+不会保证自动合并，具体取决于修改位置：
+
+- 上游修改与本仓库修改不在同一段代码：Git 通常可以自动合并。
+- 上游同时修改 `[Proxy Group]`、`[Rule]` 或 README 中的相同内容：会产生冲突，需要手动选择保留哪一方。
+- `MissAV` 规则、`Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
+- 合并后应检查 Raw 链接，确保仍然指向 `youngtreebig-droid/Shadowrocket-Rules`，不要被上游 README 或配置覆盖回源仓库地址。
+
+建议每次先查看上游差异，再同步到 `main`；不要盲目启用自动合并，以免覆盖手动选节点和 MissAV 规则。
+
+## 访问权限
+
+当前仓库是公开仓库，因此任何人都可以查看文件并访问 Raw 链接。公开仓库才能直接支持 Shadowrocket 扫码导入和无登录自动更新。
+
+由于这是公开仓库的 fork，不能单独将它改成私有并继续保留 fork 关系。若必须只自己访问，需要新建一个**私有的独立仓库**并推送代码副本，再自行配置上游 remote；但 GitHub 私有 Raw 链接通常需要登录鉴权，Shadowrocket 直接扫码或自动更新可能无法读取。
+
+## 其他说明
+
+- 银行和券商服务对出口 IP 稳定性较敏感，建议手动固定同一个香港节点。
+- 如需 HTTPS 解密，请在 Shadowrocket 中生成并安装 CA 证书。
+- `localhost.weixin.qq.com`、局域网反向解析、Apple Push、HTTPDNS 拦截等优化已包含在配置中。
 
 ## License
 
