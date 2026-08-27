@@ -33,7 +33,7 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 
 ## 本配置的主要行为
 
-- **MissAV**：域名中包含 `missav` 的请求匹配 `DOMAIN-KEYWORD,missav`，默认进入 `🇺🇸 美国节点`。
+- **MissAV**：先通过 `MissAV.list` 匹配主站、视频/图片 CDN 和推荐接口，再用 `DOMAIN-KEYWORD,missav` 兜底，默认进入 `🇺🇸 美国节点`。
 - **手动固定节点**：`Proxy` 和所有地区策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
 - **Proxy 组**：新增 `Proxy` 手动代理组，自动收集已添加的节点，解决没有独立代理组供 `Select Proxy` 选择的问题。
 - **主节点选择**：`🚀 节点选择` 默认选择 `Proxy`，也可以切换到香港、台湾、日本、美国或其他节点组。
@@ -60,7 +60,7 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 | 优先级 | 服务 | 默认策略 |
 |---:|---|---|
 | 1 | DNS 防泄露 / HTTPDNS | `REJECT` |
-| 2 | 域名中含 `missav` | `🇺🇸 美国节点` |
+| 2 | MissAV 主站、CDN、推荐接口及含 `missav` 的域名 | `🇺🇸 美国节点` |
 | 3 | 谷歌服务（含 Gemini） | `🇯🇵 日本节点` |
 | 4 | AI 服务（ChatGPT、Claude 等） | `🇺🇸 美国节点` |
 | 5 | 油管视频 | `🚀 节点选择` |
@@ -87,6 +87,7 @@ Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则�
 
 | 文件 | Raw 地址 |
 |---|---|
+| `MissAV.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/MissAV.list` |
 | `Google.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Google.list` |
 | `AI.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/AI.list` |
 | `HSBC_HK.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HSBC_HK.list` |
@@ -99,6 +100,8 @@ Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则�
 
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules)
+- MissAV 主站后缀参考 [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community/blob/master/data/missav) 和 [sub-kek/shadowrocket-lists](https://github.com/sub-kek/shadowrocket-lists/blob/master/shadowrocket/missav.list)。
+- MissAV CDN / 推荐接口参考 [zijinan/Loon-rule](https://github.com/zijinan/Loon-rule/blob/main/Loon/rule/MissAV.list)。
 
 ## 上游更新与合并
 
@@ -130,7 +133,7 @@ git push origin main
 
 - 上游修改与本仓库修改不在同一段代码：Git 通常可以自动合并。
 - 上游同时修改 `[Proxy Group]`、`[Rule]` 或 README 中的相同内容：会产生冲突，需要手动选择保留哪一方。
-- `MissAV` 规则、`Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
+- `MissAV.list`、MissAV 关键词兜底、`Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
 - 合并后应检查 Raw 链接，确保仍然指向 `youngtreebig-droid/Shadowrocket-Rules`，不要被上游 README 或配置覆盖回源仓库地址。
 
 建议每次先查看上游差异，再同步到 `main`；不要盲目启用自动合并，以免覆盖手动选节点和 MissAV 规则。
@@ -145,7 +148,7 @@ git push origin main
 
 - 银行和券商服务对出口 IP 稳定性较敏感，建议手动固定同一个香港节点。
 - 如需 HTTPS 解密，请在 Shadowrocket 中生成并安装 CA 证书。
-- `localhost.weixin.qq.com`、局域网反向解析、Apple Push、HTTPDNS 拦截等优化已包含在配置中。
+- `MissAV.list`、localhost.weixin.qq.com、局域网反向解析、Apple Push、HTTPDNS 拦截等优化已包含在配置中。
 
 ## License
 

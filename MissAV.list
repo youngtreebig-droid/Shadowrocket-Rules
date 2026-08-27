@@ -1,0 +1,23 @@
+# NAME: MissAV
+# SOURCE:
+# - https://github.com/v2fly/domain-list-community/blob/master/data/missav
+# - https://github.com/sub-kek/shadowrocket-lists/blob/master/shadowrocket/missav.list
+# - https://github.com/zijinan/Loon-rule/blob/main/Loon/rule/MissAV.list
+# UPDATED: 2026-08-27
+# DESCRIPTION: MissAV 主站、视频/图片 CDN 和推荐接口
+
+# MissAV main sites
+DOMAIN-SUFFIX,missav.ai
+DOMAIN-SUFFIX,missav.com
+DOMAIN-SUFFIX,missav.live
+DOMAIN-SUFFIX,missav.uno
+DOMAIN-SUFFIX,missav.vip
+DOMAIN-SUFFIX,missav.ws
+DOMAIN-SUFFIX,missav123.com
+
+# MissAV video / image / preview CDN
+DOMAIN-SUFFIX,surrit.com
+DOMAIN-SUFFIX,fourhoi.com
+
+# MissAV recommendation API
+DOMAIN,client-rapi-missav.recombee.com
