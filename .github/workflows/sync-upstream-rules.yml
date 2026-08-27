@@ -1,0 +1,99 @@
+name: Sync upstream rule lists
+
+on:
+  schedule:
+    - cron: "17 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream-rules
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      UPSTREAM_REPOSITORY: LingJingMaster/Shadowrocket-Rules
+      UPSTREAM_BRANCH: main
+      RULE_FILES: |
+        AI.list
+        Apple.list
+        ApplePush.list
+        Google.list
+        HK_Banks_Direct.list
+        HK_Broker.list
+        HSBC_HK.list
+
+    steps:
+      - name: Check out fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge selected upstream lists
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tmpdir="$(mktemp -d)"
+          trap 'rm -rf "$tmpdir"' EXIT
+          mapfile -t rule_files <<< "$RULE_FILES"
+
+          git remote add upstream "https://github.com/${UPSTREAM_REPOSITORY}.git"
+          git fetch --no-tags upstream "${UPSTREAM_BRANCH}"
+          base="$(git merge-base HEAD "upstream/${UPSTREAM_BRANCH}")"
+          conflicts=0
+          changed=()
+
+          for file in "${rule_files[@]}"; do
+            [[ -z "$file" ]] && continue
+
+            base_file="$tmpdir/base"
+            current_file="$tmpdir/current"
+            upstream_file="$tmpdir/upstream"
+            merged_file="$tmpdir/merged"
+
+            if ! git show "${base}:${file}" > "$base_file"; then
+              echo "::error file=${file}::The rule file is missing from the common ancestor."
+              conflicts=1
+              continue
+            fi
+            if ! git show "HEAD:${file}" > "$current_file"; then
+              echo "::error file=${file}::The rule file is missing from this fork."
+              conflicts=1
+              continue
+            fi
+            if ! git show "upstream/${UPSTREAM_BRANCH}:${file}" > "$upstream_file"; then
+              echo "::error file=${file}::The rule file is missing from upstream; refusing to delete it automatically."
+              conflicts=1
+              continue
+            fi
+
+            if git merge-file --quiet -p "$current_file" "$base_file" "$upstream_file" > "$merged_file"; then
+              if ! cmp -s "$current_file" "$merged_file"; then
+                cp "$merged_file" "$file"
+                changed+=("$file")
+              fi
+            else
+              echo "::error file=${file}::Upstream changes conflict with local changes; no files were updated."
+              conflicts=1
+            fi
+          done
+
+          if ((conflicts)); then
+            exit 1
+          fi
+
+          if ((${#changed[@]} == 0)); then
+            echo "All selected upstream rule lists are already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${changed[@]}"
+          git commit -m "同步上游规则列表"
+          git push origin HEAD:main
