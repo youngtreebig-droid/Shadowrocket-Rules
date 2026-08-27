@@ -90,18 +90,22 @@ Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则�
 
 ## 本仓库维护的规则集
 
-下面这些文件使用当前仓库的 Raw 地址，修改后会随 `main` 分支更新：
+下面这些文件使用当前仓库的 Raw 地址。除 `MissAV.list` 外，GitHub Actions 会每天从源仓库同步，并且只修改这些指定的 `.list` 文件：
 
-| 文件 | Raw 地址 |
-|---|---|
-| `MissAV.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/MissAV.list` |
-| `Google.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Google.list` |
-| `AI.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/AI.list` |
-| `HSBC_HK.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HSBC_HK.list` |
-| `HK_Banks_Direct.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Banks_Direct.list` |
-| `HK_Broker.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Broker.list` |
-| `ApplePush.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/ApplePush.list` |
-| `Apple.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Apple.list` |
+| 文件 | Raw 地址 | 同步方式 |
+|---|---|---|
+| `MissAV.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/MissAV.list` | 本仓库自定义，不覆盖 |
+| `Google.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Google.list` | 每日与源仓库合并 |
+| `AI.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/AI.list` | 每日与源仓库合并 |
+| `HSBC_HK.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HSBC_HK.list` | 每日与源仓库合并 |
+| `HK_Banks_Direct.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Banks_Direct.list` | 每日与源仓库合并 |
+| `HK_Broker.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/HK_Broker.list` | 每日与源仓库合并 |
+| `ApplePush.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/ApplePush.list` | 每日与源仓库合并 |
+| `Apple.list` | `https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Apple.list` | 每日与源仓库合并 |
+
+同步工作流也可以在仓库的 **Actions → Sync upstream rule lists → Run workflow** 中手动运行。它采用三方合并：上游和本仓库修改不同位置时自动合并；同一位置发生冲突时停止并保留现状，不会覆盖你的自定义配置。规则文件提交到 `main` 后，Shadowrocket 按规则集刷新机制重新获取即可。
+
+如果仓库的 Actions 尚未启用，请先在 **Settings → Actions → General** 中启用 Actions，并将 **Workflow permissions** 设为 **Read and write permissions**，这样工作流才能把更新后的规则清单提交回 `main`。
 
 其他公共规则集主要来自：
 
@@ -112,12 +116,14 @@ Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则�
 
 ## 上游更新与合并
 
-### Fork 不会自动同步
+### Fork 不会自动同步，规则清单会单独同步
 
-GitHub 的 fork 不会因为源仓库更新而自动修改本仓库。当前关系是：
+GitHub 的 fork 本身不会因为源仓库更新而自动修改本仓库。当前关系是：
 
 - `origin`：你的仓库 `youngtreebig-droid/Shadowrocket-Rules`
 - `upstream`：源仓库 `LingJingMaster/Shadowrocket-Rules`
+
+本仓库已加入 `.github/workflows/sync-upstream-rules.yml`。它只同步上面列出的 7 个源仓库 `.list` 文件，不同步 `Shadowrocket.conf`、README、二维码和 `MissAV.list`。因此，源仓库更新后，规则清单可以自动跟进，而你的分组、倍率过滤、MissAV 规则和说明不会被源仓库直接覆盖。
 
 在 GitHub 网页端可以打开本仓库，点击 **Sync fork → Update branch**。没有冲突时 GitHub 会直接同步；有冲突时需要手动处理。
 
@@ -141,6 +147,7 @@ git push origin main
 - 上游修改与本仓库修改不在同一段代码：Git 通常可以自动合并。
 - 上游同时修改 `[Proxy Group]`、`[Rule]` 或 README 中的相同内容：会产生冲突，需要手动选择保留哪一方。
 - `MissAV.list`、MissAV 关键词兜底、`Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
+- 自动同步只处理指定的 `.list` 文件；如果其中某个文件与本地修改发生冲突，工作流会失败并保留当前版本，需要手动处理该文件。
 - 合并后应检查 Raw 链接，确保仍然指向 `youngtreebig-droid/Shadowrocket-Rules`，不要被上游 README 或配置覆盖回源仓库地址。
 
 建议每次先查看上游差异，再同步到 `main`；不要盲目启用自动合并，以免覆盖手动选节点和 MissAV 规则。
