@@ -33,7 +33,7 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 
 ## 本配置的主要行为
 
-- **MissAV**：先通过 `MissAV.list` 匹配主站、视频/图片 CDN 和推荐接口，再用 `DOMAIN-KEYWORD,missav` 兜底，默认进入 `🇺🇸 美国节点`。
+- **MissAV**：`MissAV.list` 先匹配主站、视频/图片 CDN 和推荐接口，再用 `DOMAIN-KEYWORD,missav` 兜底；流量进入可手动选择的 `📺 MissAV` 组，默认选择 `🇺🇸 美国节点`。
 - **手动固定节点**：`Proxy` 和所有地区策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
 - **Proxy 组**：新增 `Proxy` 手动代理组，自动收集已添加的节点，解决没有独立代理组供 `Select Proxy` 选择的问题。
 - **主节点选择**：`🚀 节点选择` 默认选择 `Proxy`，也可以切换到香港、台湾、日本、新加坡、美国、韩国、越南、马来西亚或其他节点组。
@@ -46,6 +46,7 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 |---|---|---|---|
 | `Proxy` | `select` | 第一个节点 | 汇总已添加的节点，手动固定选择 |
 | `🚀 节点选择` | `select` | `Proxy` | 主策略组 |
+| `📺 MissAV` | `select` | `🇺🇸 美国节点` | MissAV 专属策略，可改选节点选择、Proxy、直连或拒绝 |
 | `🇭🇰 香港节点` | `select` | 第一个匹配节点 | 按节点名称匹配香港节点 |
 | `🇹🇼 台湾节点` | `select` | 第一个匹配节点 | 按节点名称匹配台湾节点 |
 | `🇯🇵 日本节点` | `select` | 第一个匹配节点 | 按节点名称匹配日本节点 |
@@ -56,7 +57,9 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 | `🇲🇾 马来西亚节点` | `select` | 第一个匹配节点 | 按节点名称匹配马来西亚节点 |
 | `🌐 其他节点` | `select` | 第一个匹配节点 | 匹配未归入上述地区的节点 |
 
-`PROXY` 是规则语法中的通用代理策略标识，不等于配置中声明的 `Proxy` 策略组。本配置显式声明了 `Proxy` 组，并将相关默认目标改为该 `select` 组，便于手动固定节点。
+`Proxy` 是本配置明确声明的策略组，定义为 `Proxy = select,...`；它会收集符合倍率过滤条件的订阅节点，供其他策略组选择。名称区分大小写，`Proxy` 与 `PROXY` 不是同一个名称。
+
+以 `🚀 节点选择 = select,Proxy,DIRECT,REJECT,...,policy-select-name=Proxy` 为例：等号左侧是策略组名称；第一个 `select` 表示手动选择、不自动测速切换；`Proxy` 和各地区名称是可进入的其他策略组；`DIRECT` 表示直连；`REJECT` 表示拒绝连接；末尾的 `policy-select-name=Proxy` 表示首次加载时默认选择 `Proxy`。当前发布配置的 `[Proxy Group]` 中已包含这一行 `Proxy = select,...`；若 App 内看不到它，请重新下载或更新到当前 Raw 配置。
 
 节点名称中带有 2 倍及以上倍率标记的节点可能仍显示在 Shadowrocket 的原始节点列表中，但不会被本配置的 `Proxy`、地区组或主策略组收录。
 
@@ -67,7 +70,7 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 | 优先级 | 服务 | 默认策略 |
 |---:|---|---|
 | 1 | DNS 防泄露 / HTTPDNS | `REJECT` |
-| 2 | MissAV 主站、CDN、推荐接口及含 `missav` 的域名 | `🇺🇸 美国节点` |
+| 2 | MissAV 主站、CDN、推荐接口及含 `missav` 的域名 | `📺 MissAV`（默认美国节点） |
 | 3 | 谷歌服务（含 Gemini） | `🇯🇵 日本节点` |
 | 4 | AI 服务（ChatGPT、Claude 等） | `🇺🇸 美国节点` |
 | 5 | 油管视频 | `🚀 节点选择` |
@@ -113,6 +116,12 @@ Google 规则位于 AI 规则之前，因此 Gemini 等同时匹配两类规则�
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules)
 - MissAV 主站后缀参考 [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community/blob/master/data/missav) 和 [sub-kek/shadowrocket-lists](https://github.com/sub-kek/shadowrocket-lists/blob/master/shadowrocket/missav.list)。
 - MissAV CDN / 推荐接口参考 [zijinan/Loon-rule](https://github.com/zijinan/Loon-rule/blob/main/Loon/rule/MissAV.list)。
+
+### MissAV.list 覆盖范围
+
+`v2fly/domain-list-community` 与 `sub-kek/shadowrocket-lists` 一致收录 7 个 MissAV 主站后缀：`missav.ai`、`missav.com`、`missav.live`、`missav.uno`、`missav.vip`、`missav.ws`、`missav123.com`。本仓库还收录经独立规则和抓取项目验证的 `surrit.com`、`fourhoi.com` 媒体域名，以及 `client-rapi-missav.recombee.com` 推荐接口。
+
+这覆盖了已公开收录的主站与已验证依赖域名，但无法保证永久完整：站点可能更换域名或 CDN。因此保留 `DOMAIN-KEYWORD,missav` 作为兜底；不使用过宽的 `DOMAIN-SUFFIX,recombee.com` 或通用 CDN 规则，以免将其他服务流量错误路由到美国节点。
 
 ## 上游更新与合并
 
