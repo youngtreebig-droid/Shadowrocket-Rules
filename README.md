@@ -35,16 +35,15 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 
 - **MissAV**：`MissAV.list` 先匹配主站、视频/图片 CDN 和推荐接口，再用 `DOMAIN-KEYWORD,missav` 兜底；流量进入可手动选择的 `📺 MissAV` 组，默认继承 `🚀 节点选择`。
 - **手动固定节点**：`🚀 节点选择`、所有地区组和服务策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
-- **主节点选择**：`🚀 节点选择` 自动收集符合倍率限制的所有订阅节点，默认选择 `🇰🇷 韩国节点`；可直接选择具体节点，也可以选择香港、台湾、日本、新加坡、美国、韩国、越南、马来西亚或其他节点组。
+- **主节点选择**：`🚀 节点选择` 自动收集所有订阅节点，默认选择 `🇰🇷 韩国节点`；可直接选择具体节点，也可以选择香港、台湾、日本、新加坡、美国、韩国、越南、马来西亚或其他节点组。
 - **统一默认出口**：所有服务策略组默认选择 `🚀 节点选择`，因此会继承你在主节点选择中手动选定的节点；需要单独分流时，仍可在对应服务组内覆盖选择。
 - **地区识别**：地区组依据节点名称关键词匹配，请保证节点名称包含对应的国家/地区名称、常用英文缩写或国旗。
-- **倍率过滤**：所有策略组排除节点名称中明确标注为 2 倍及以上的节点（如 `[2.0]`、`[3]`、`[4]`、`2x`、`4倍`），避免误用高倍率节点。
 
 ## 策略组
 
 | 策略组 | 类型 | 默认选择 | 说明 |
 |---|---|---|---|
-| `🚀 节点选择` | `select` | `🇰🇷 韩国节点` | 汇总所有符合倍率限制的订阅节点，可手动固定选择 |
+| `🚀 节点选择` | `select` | `🇰🇷 韩国节点` | 汇总所有订阅节点，可手动固定选择 |
 | `📺 MissAV` | `select` | `🚀 节点选择` | MissAV 专属策略，可改选美国节点、直连或拒绝 |
 | `🇭🇰 香港节点` | `select` | 第一个匹配节点 | 按节点名称匹配香港节点 |
 | `🇹🇼 台湾节点` | `select` | 第一个匹配节点 | 按节点名称匹配台湾节点 |
@@ -57,8 +56,6 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 | `🌐 其他节点` | `select` | 第一个匹配节点 | 汇总未归入上述地区的未来新增节点；当前可能为空 |
 
 以 `🚀 节点选择 = select,🇰🇷 韩国节点,DIRECT,REJECT,...,policy-select-name=🇰🇷 韩国节点,policy-regex-filter=...` 为例：等号左侧是策略组名称；第一个 `select` 表示手动选择、不自动测速切换；地区名称是可进入的地区子组；`DIRECT` 表示直连；`REJECT` 表示拒绝连接；`policy-select-name=🇰🇷 韩国节点` 表示首次加载时默认选韩国组；`policy-regex-filter` 会将匹配的实际订阅节点直接显示在这个组中。
-
-节点名称中带有 2 倍及以上倍率标记的节点可能仍显示在 Shadowrocket 的原始节点列表中，但不会被本配置的 `🚀 节点选择` 或地区组收录。
 
 ## 分流规则优先级
 
@@ -129,7 +126,7 @@ GitHub 的 fork 本身不会因为源仓库更新而自动修改本仓库。当�
 - `origin`：你的仓库 `youngtreebig-droid/Shadowrocket-Rules`
 - `upstream`：源仓库 `LingJingMaster/Shadowrocket-Rules`
 
-本仓库已加入 `.github/workflows/sync-upstream-rules.yml`。它只同步上面列出的 7 个源仓库 `.list` 文件，不同步 `Shadowrocket.conf`、README、二维码和 `MissAV.list`。因此，源仓库更新后，规则清单可以自动跟进，而你的分组、倍率过滤、MissAV 规则和说明不会被源仓库直接覆盖。
+本仓库已加入 `.github/workflows/sync-upstream-rules.yml`。它只同步上面列出的 7 个源仓库 `.list` 文件，不同步 `Shadowrocket.conf`、README、二维码和 `MissAV.list`。因此，源仓库更新后，规则清单可以自动跟进，而你的分组、MissAV 规则和说明不会被源仓库直接覆盖。
 
 在 GitHub 网页端可以打开本仓库，点击 **Sync fork → Update branch**。没有冲突时 GitHub 会直接同步；有冲突时需要手动处理。
 
@@ -168,7 +165,7 @@ git push origin main
 
 - 银行和券商服务对出口 IP 稳定性较敏感，建议手动固定同一个香港节点。
 - 如需 HTTPS 解密，请在 Shadowrocket 中生成并安装 CA 证书。
-- `MissAV.list`、倍率过滤、localhost.weixin.qq.com、局域网反向解析、Apple Push、HTTPDNS 拦截等优化已包含在配置中。
+- `MissAV.list`、localhost.weixin.qq.com、局域网反向解析、Apple Push、HTTPDNS 拦截等优化已包含在配置中。
 
 ## License
 
