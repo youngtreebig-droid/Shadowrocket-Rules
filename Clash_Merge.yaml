@@ -377,6 +377,24 @@ rule-providers:
     path: ./ruleset/blackmatrix-china.yaml
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml
 
+  blackmatrix-xiaohongshu:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    proxy: "🚀 节点选择"
+    path: ./ruleset/blackmatrix-xiaohongshu.yaml
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/XiaoHongShu/XiaoHongShu.yaml
+
+  loyalsoldier-direct:
+    type: http
+    behavior: domain
+    format: yaml
+    interval: 86400
+    proxy: "🚀 节点选择"
+    path: ./ruleset/loyalsoldier-direct.yaml
+    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+
   blackmatrix-global:
     type: http
     behavior: classical
@@ -415,7 +433,9 @@ rules:
   - "RULE-SET,youngtree-hk-broker,📈 券商服务"
   - "RULE-SET,youngtree-apple-push,🍎 苹果推送"
   - "RULE-SET,youngtree-apple,🍏 苹果服务"
+  - "RULE-SET,blackmatrix-xiaohongshu,🔒 国内服务"
+  - "RULE-SET,loyalsoldier-direct,🔒 国内服务"
   - "RULE-SET,blackmatrix-china,🔒 国内服务"
-  - "RULE-SET,blackmatrix-global,🌍 非中国"
   - "GEOIP,CN,🔒 国内服务"
+  - "RULE-SET,blackmatrix-global,🌍 非中国"
   - "MATCH,🐟 漏网之鱼"
