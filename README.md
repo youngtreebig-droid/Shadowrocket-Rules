@@ -28,15 +28,15 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 2. 粘贴上面的 Raw 链接并下载配置。
 3. 点击下载的配置，选择**使用中**。
 4. 返回首页，添加自己的节点或订阅。
-5. 在 `Proxy`、`🚀 节点选择` 或地区策略组中手动选择节点。
+5. 在 `🚀 Proxy`、`🚀 节点选择` 或地区策略组中手动选择节点。
 6. 测试连接并启用 Shadowrocket。
 
 ## 本配置的主要行为
 
 - **MissAV**：`MissAV.list` 先匹配主站、视频/图片 CDN 和推荐接口，再用 `DOMAIN-KEYWORD,missav` 兜底；流量进入可手动选择的 `📺 MissAV` 组，默认选择 `🇺🇸 美国节点`。
-- **手动固定节点**：`Proxy` 和所有地区策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
-- **Proxy 组**：新增 `Proxy` 手动代理组，自动收集已添加的节点，解决没有独立代理组供 `Select Proxy` 选择的问题。
-- **主节点选择**：`🚀 节点选择` 默认选择 `Proxy`，也可以切换到香港、台湾、日本、新加坡、美国、韩国、越南、马来西亚或其他节点组。
+- **手动固定节点**：`🚀 Proxy` 和所有地区策略组均为 `select`，不再使用 `url-test` 的定时测速和自动切换。
+- **🚀 Proxy 组**：`🚀 Proxy` 手动代理组会自动收集已添加的节点，提供独立的代理节点选择。
+- **主节点选择**：`🚀 节点选择` 默认选择 `🚀 Proxy`，也可以切换到香港、台湾、日本、新加坡、美国、韩国、越南、马来西亚或其他节点组。
 - **地区识别**：地区组依据节点名称关键词匹配，请保证节点名称包含对应的国家/地区名称、常用英文缩写或国旗。
 - **倍率过滤**：所有策略组排除节点名称中明确标注为 2 倍及以上的节点（如 `[2.0]`、`[3]`、`[4]`、`2x`、`4倍`），避免误用高倍率节点。
 
@@ -44,9 +44,9 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 
 | 策略组 | 类型 | 默认选择 | 说明 |
 |---|---|---|---|
-| `Proxy` | `select` | 第一个节点 | 汇总已添加的节点，手动固定选择 |
-| `🚀 节点选择` | `select` | `Proxy` | 主策略组 |
-| `📺 MissAV` | `select` | `🇺🇸 美国节点` | MissAV 专属策略，可改选节点选择、Proxy、直连或拒绝 |
+| `🚀 Proxy` | `select` | 第一个节点 | 汇总已添加的节点，手动固定选择 |
+| `🚀 节点选择` | `select` | `🚀 Proxy` | 主策略组 |
+| `📺 MissAV` | `select` | `🇺🇸 美国节点` | MissAV 专属策略，可改选节点选择、🚀 Proxy、直连或拒绝 |
 | `🇭🇰 香港节点` | `select` | 第一个匹配节点 | 按节点名称匹配香港节点 |
 | `🇹🇼 台湾节点` | `select` | 第一个匹配节点 | 按节点名称匹配台湾节点 |
 | `🇯🇵 日本节点` | `select` | 第一个匹配节点 | 按节点名称匹配日本节点 |
@@ -57,11 +57,11 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 | `🇲🇾 马来西亚节点` | `select` | 第一个匹配节点 | 按节点名称匹配马来西亚节点 |
 | `🌐 其他节点` | `select` | 第一个匹配节点 | 匹配未归入上述地区的节点 |
 
-`Proxy` 是本配置明确声明的策略组，定义为 `Proxy = select,...`；它会收集符合倍率过滤条件的订阅节点，供其他策略组选择。名称区分大小写，`Proxy` 与 `PROXY` 不是同一个名称。
+`🚀 Proxy` 是本配置明确声明的策略组，定义为 `🚀 Proxy = select,...`；它会收集符合倍率过滤条件的订阅节点，供其他策略组选择。
 
-以 `🚀 节点选择 = select,Proxy,DIRECT,REJECT,...,policy-select-name=Proxy` 为例：等号左侧是策略组名称；第一个 `select` 表示手动选择、不自动测速切换；`Proxy` 和各地区名称是可进入的其他策略组；`DIRECT` 表示直连；`REJECT` 表示拒绝连接；末尾的 `policy-select-name=Proxy` 表示首次加载时默认选择 `Proxy`。当前发布配置的 `[Proxy Group]` 中已包含这一行 `Proxy = select,...`；若 App 内看不到它，请重新下载或更新到当前 Raw 配置。
+以 `🚀 节点选择 = select,🚀 Proxy,DIRECT,REJECT,...,policy-select-name=🚀 Proxy` 为例：等号左侧是策略组名称；第一个 `select` 表示手动选择、不自动测速切换；`🚀 Proxy` 和各地区名称是可进入的其他策略组；`DIRECT` 表示直连；`REJECT` 表示拒绝连接；末尾的 `policy-select-name=🚀 Proxy` 表示首次加载时默认选择 `🚀 Proxy`。当前发布配置的 `[Proxy Group]` 中已包含这一行 `🚀 Proxy = select,...`；若 App 内看不到它，请重新下载或更新到当前 Raw 配置。
 
-节点名称中带有 2 倍及以上倍率标记的节点可能仍显示在 Shadowrocket 的原始节点列表中，但不会被本配置的 `Proxy`、地区组或主策略组收录。
+节点名称中带有 2 倍及以上倍率标记的节点可能仍显示在 Shadowrocket 的原始节点列表中，但不会被本配置的 `🚀 Proxy`、地区组或主策略组收录。
 
 ## 分流规则优先级
 
@@ -155,7 +155,7 @@ git push origin main
 
 - 上游修改与本仓库修改不在同一段代码：Git 通常可以自动合并。
 - 上游同时修改 `[Proxy Group]`、`[Rule]` 或 README 中的相同内容：会产生冲突，需要手动选择保留哪一方。
-- `MissAV.list`、MissAV 关键词兜底、`Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
+- `MissAV.list`、MissAV 关键词兜底、`🚀 Proxy` 组以及 `url-test` → `select` 的改动，只要上游没有重写对应区域，通常会保留。
 - 自动同步只处理指定的 `.list` 文件；如果其中某个文件与本地修改发生冲突，工作流会失败并保留当前版本，需要手动处理该文件。
 - 合并后应检查 Raw 链接，确保仍然指向 `youngtreebig-droid/Shadowrocket-Rules`，不要被上游 README 或配置覆盖回源仓库地址。
 
