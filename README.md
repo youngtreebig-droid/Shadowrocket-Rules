@@ -1,8 +1,8 @@
-# Shadowrocket Rules
+# Shadowrocket and Clash Rules
 
-面向 iOS Shadowrocket 的规则配置。导入配置后，在 Shadowrocket 首页添加自己的节点或订阅即可使用。
+面向 iOS Shadowrocket 的规则配置，并提供 Clash Verge / Mihomo 可用的 Merge 覆写配置。
 
-> 当前版本：2026-08-27
+> 当前版本：2026-08-28
 > 当前仓库：[`youngtreebig-droid/Shadowrocket-Rules`](https://github.com/youngtreebig-droid/Shadowrocket-Rules)
 > 源仓库：[`LingJingMaster/Shadowrocket-Rules`](https://github.com/LingJingMaster/Shadowrocket-Rules)
 
@@ -21,6 +21,18 @@ https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/hea
 <img width="240" height="240" alt="Shadowrocket 配置二维码" src="assets/shadowrocket-config-qr.png" />
 
 二维码和 Raw 链接都指向当前仓库 `main` 分支的 `Shadowrocket.conf`。配置更新并推送到 `main` 后，Shadowrocket 的 `update-url` 会继续使用这个地址。
+
+## Clash Verge / Mihomo
+
+Clash Verge 不要把 `Shadowrocket.conf` 粘贴到“订阅文件链接”。请先正常导入你的节点订阅，再将下面文件的**完整内容**复制到 **订阅 → 全局扩展覆写配置 → Merge** 编辑器并保存：
+
+```text
+https://raw.githubusercontent.com/youngtreebig-droid/Shadowrocket-Rules/refs/heads/main/Clash_Merge.yaml
+```
+
+`Clash_Merge.yaml` 适用于 Mihomo 内核（Clash Verge Rev 默认内核），不适用于旧版 Clash 核心。它会覆盖节点订阅原有的 `proxy-groups` 和 `rules`，但保留订阅中的节点和 `proxy-providers`；所有策略组保持 `select` 手动选择，不会自动测速切换。`🚀 节点选择` 默认选 `🇰🇷 韩国节点`，并会收录包括高倍率节点在内的所有订阅节点。
+
+仓库内的 `Clash/rules/*.yaml` 是从本仓库 `.list` 文件生成的 Mihomo `classical` 规则提供器。源规则更新时，自动同步工作流会一并重新生成它们。由于 Mihomo 不支持 Shadowrocket 的 `USER-AGENT` 和 `URL-REGEX` 规则，转换时会明确省略这两类规则；其余域名和 IP 规则会保留。
 
 ## 快速开始
 
@@ -126,7 +138,7 @@ GitHub 的 fork 本身不会因为源仓库更新而自动修改本仓库。当�
 - `origin`：你的仓库 `youngtreebig-droid/Shadowrocket-Rules`
 - `upstream`：源仓库 `LingJingMaster/Shadowrocket-Rules`
 
-本仓库已加入 `.github/workflows/sync-upstream-rules.yml`。它只同步上面列出的 7 个源仓库 `.list` 文件，不同步 `Shadowrocket.conf`、README、二维码和 `MissAV.list`。因此，源仓库更新后，规则清单可以自动跟进，而你的分组、MissAV 规则和说明不会被源仓库直接覆盖。
+本仓库已加入 `.github/workflows/sync-upstream-rules.yml`。它只同步上面列出的 7 个源仓库 `.list` 文件，不同步 `Shadowrocket.conf`、`Clash_Merge.yaml`、README、二维码和 `MissAV.list`。每次同步后，工作流会从 `.list` 重新生成 `Clash/rules/*.yaml`。因此，源仓库更新后，Shadowrocket 和 Clash 使用的规则清单都可以自动跟进，而你的分组、MissAV 规则和说明不会被源仓库直接覆盖。
 
 在 GitHub 网页端可以打开本仓库，点击 **Sync fork → Update branch**。没有冲突时 GitHub 会直接同步；有冲突时需要手动处理。
 

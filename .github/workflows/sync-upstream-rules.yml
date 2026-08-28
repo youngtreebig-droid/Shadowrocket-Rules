@@ -87,6 +87,10 @@ jobs:
             exit 1
           fi
 
+          python3 scripts/generate_clash_rule_providers.py
+          mapfile -t generated_changed < <(git diff --name-only -- Clash/rules)
+          changed+=("${generated_changed[@]}")
+
           if ((${#changed[@]} == 0)); then
             echo "All selected upstream rule lists are already current."
             exit 0
