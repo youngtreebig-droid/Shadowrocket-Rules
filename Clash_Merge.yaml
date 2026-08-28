@@ -1,7 +1,7 @@
-# Clash Verge / Mihomo global Merge configuration.
-# Paste this entire file into Clash Verge's "Global Extend Override Config" -> Merge editor.
-# It replaces the subscription's proxy-groups and rules, but keeps its proxies and proxy-providers.
-# This file requires a Mihomo-based client such as Clash Verge Rev.
+# Clash Verge / Mihomo replacement-mode Merge configuration.
+# This replaces a subscription's proxy-groups and rules.
+# For subscriptions that define their own proxy groups or rules, use Clash_Script.js in
+# Clash Verge's "Global Extend Script" instead. Do not enable both files together.
 
 profile:
   store-selected: true
