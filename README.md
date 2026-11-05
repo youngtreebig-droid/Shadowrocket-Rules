@@ -68,6 +68,7 @@
 - 固定策略（不在策略组中，直接写入规则）：
 - 📲 电报消息、🐱 代码托管 → PROXY
 - 🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
+- 🔐 1Password → DIRECT（上游 EliDoves/Proxy `1Password.list` + 官方文档补充域名；1Password 无公开固定 IP，按域名匹配）
 - 🧱 DNS 防泄露、WebRTC 防泄露 → REJECT
 
 
