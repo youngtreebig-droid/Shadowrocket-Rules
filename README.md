@@ -26,23 +26,35 @@
 
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
-| 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | 节点选择，可切换 DIRECT 或地区节点 |
-| 2 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务） | 美国节点 |
-| 3 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
-| 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
-| 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
-| 6 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
-| 7 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 节点选择 |
-| 8 | missav（missav 及 JAV 聚合 / 在线观看站） | 节点选择 |
-| 9 | 📲 电报消息 | PROXY（固定） |
-| 10 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 11 | Ⓜ️ 微软服务 | 节点选择 |
-| 12 | 🍎 苹果推送 | DIRECT |
-| 13 | 🍏 苹果服务 | DIRECT |
-| 14 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 15 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
-| 16 | 🐟 漏网之鱼（兜底，含非中国境外流量） | 节点选择 |
-| 17 | GEOIP CN | DIRECT |
+| 1 | 🧱 WebRTC 防泄露（UDP 3478 / 5349 / 19302-19309 的 STUN 流量） | 国内 IP 直连，其余 REJECT |
+| 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
+| 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`） | DIRECT（固定） |
+| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务） | 美国节点 |
+| 5 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix 风控域名例外放行） | REJECT |
+| 6 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
+| 7 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被谷歌分组截走） | 节点选择 |
+| 8 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
+| 9 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
+| 10 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
+| 11 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
+| 12 | missav（missav 及 JAV 聚合 / 在线观看站） | 香港节点 |
+| 13 | 哔哩哔哩 | DIRECT（固定） |
+| 14 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
+| 15 | Ⓜ️ 微软服务 | 美国节点 |
+| 16 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
+| 17 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT |
+| 18 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
+| 19 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`，Loyalsoldier `proxy`） | PROXY（固定） |
+| 20 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`、`GlobalMedia`，Loyalsoldier `telegramcidr`）→ PROXY | 见左 |
+| 21 | GEOIP CN | DIRECT |
+| 22 | 🐟 漏网之鱼（所有列表都没匹配到的流量） | 香港节点 |
+
+规则从上往下匹配，命中即停。排序原则：
+- 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务（例如 Gemini 被谷歌分组截走）
+- 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
+- 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
+- 你自己的分组（AI、油管、谷歌、TikTok、Netflix、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
+- 广告拦截放在 🤖 AI 服务之后、谷歌和国内直连等大列表之前：AI 依赖的统计域名（statsig、datadog 等）不会被误杀，doubleclick、admob 等广告域名又能先被拦截
 
 
 ## 默认策略
@@ -66,10 +78,10 @@
 - 🇯🇵 日本节点 / 🇺🇸 美国节点 为手动选择组，默认分别为 `TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`，不做倍率过滤，可在组内改选
 - 🌐 其他节点 / 🇭🇰 / 🇹🇼 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
 - 固定策略（不在策略组中，直接写入规则）：
-- 📲 电报消息、🐱 代码托管 → PROXY
+- 📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Spotify、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
 - 🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
 - 🔐 1Password → DIRECT（上游 EliDoves/Proxy `1Password.list` + 官方文档补充域名；1Password 无公开固定 IP，按域名匹配）
-- 🧱 DNS 防泄露、WebRTC 防泄露 → REJECT
+- 🧱 DNS 防泄露、WebRTC 防泄露、🛑 广告 / 追踪（Loyalsoldier `reject`） → REJECT
 
 
 
@@ -79,7 +91,10 @@
 
 ## 规则集来源
 
-- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集
+- [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集；国内直连用 `ChinaMax`（含 China、ChinaIPs 等全部国内规则）
+- [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) — `reject`（广告 / 追踪拦截）、`private`（局域网域名）、`apple`、`icloud`，每日构建。国内直连只用 blackmatrix7 ChinaMax：其说明要求引用 ChinaMax 后不再叠加其他国内规则，所以没有引用 Loyalsoldier `direct`、`cncidr`
+- [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `cn.list` — 国内 AI 直连
+- 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `proxy`（包含 `gfw` 全部域名）、`telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，国内可直连的学术期刊、阿里云国际站等优先直连
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - 🤖 AI 服务（规则整体放在 `Google.list`、`Microsoft.list` 之前，避免 Gemini、Copilot 被 🔍 谷歌服务 / Ⓜ️ 微软服务提前匹配；国内 AI 不在此组）：
   - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
