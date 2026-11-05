@@ -44,10 +44,10 @@
 | 16 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
 | 17 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT |
 | 18 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
-| 19 | 🌐 境外域名（blackmatrix7 `Global_Domain`） | 🐟 漏网之鱼 |
-| 20 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`）→ 🐟 漏网之鱼 | 见左 |
+| 19 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`，Loyalsoldier `proxy`） | PROXY（固定） |
+| 20 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`、`GlobalMedia`，Loyalsoldier `telegramcidr`）→ PROXY | 见左 |
 | 21 | GEOIP CN | DIRECT |
-| 22 | 🐟 漏网之鱼（兜底） | 香港节点 |
+| 22 | 🐟 漏网之鱼（所有列表都没匹配到的流量） | 香港节点 |
 
 规则从上往下匹配，命中即停。排序原则：
 - 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务（例如 Gemini 被谷歌分组截走）
@@ -77,7 +77,7 @@
 - 🇯🇵 日本节点 / 🇺🇸 美国节点 为手动选择组，默认分别为 `TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`，不做倍率过滤，可在组内改选
 - 🌐 其他节点 / 🇭🇰 / 🇹🇼 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
 - 固定策略（不在策略组中，直接写入规则）：
-- 📲 电报消息、🐱 代码托管 → PROXY
+- 📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Spotify、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
 - 🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
 - 🔐 1Password → DIRECT（上游 EliDoves/Proxy `1Password.list` + 官方文档补充域名；1Password 无公开固定 IP，按域名匹配）
 - 🧱 DNS 防泄露、WebRTC 防泄露、🛑 广告 / 追踪（Loyalsoldier `reject`） → REJECT
@@ -93,6 +93,7 @@
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集；国内直连用 `ChinaMax`（含 China、ChinaIPs 等全部国内规则）
 - [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) — `reject`（广告 / 追踪拦截）、`private`（局域网域名）、`apple`、`icloud`，每日构建。国内直连只用 blackmatrix7 ChinaMax：其说明要求引用 ChinaMax 后不再叠加其他国内规则，所以没有引用 Loyalsoldier `direct`、`cncidr`
 - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `cn.list` — 国内 AI 直连
+- 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `proxy`（包含 `gfw` 全部域名）、`telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，国内可直连的学术期刊、阿里云国际站等优先直连
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - 🤖 AI 服务（规则整体放在 `Google.list`、`Microsoft.list` 之前，避免 Gemini、Copilot 被 🔍 谷歌服务 / Ⓜ️ 微软服务提前匹配；国内 AI 不在此组）：
   - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
