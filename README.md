@@ -28,7 +28,7 @@
 |--------|------|----------|
 | 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | 节点选择，可切换 DIRECT 或地区节点 |
 | 2 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港、美国节点 |
-| 3 | 🤖 AI 服务（ChatGPT、Claude、苹果智能等） | 美国节点 |
+| 3 | 🤖 AI 服务（ChatGPT、Claude、Grok、苹果智能等） | 美国节点 |
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 6 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
@@ -80,6 +80,7 @@
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
+- Grok / xAI 使用上游 RULE-SET：BlackSpacee/Surge `Ruleset/AIGC/xAI.list`（grok.com、x.ai）；`grokusercontent.com`（附件 / 图片）为 `conf` 内的 `DOMAIN-SUFFIX` 规则，均归入 🤖 AI 服务
 - 日本AV 使用上游 RULE-SET：mediacvg/ytnfst `jpav.list`（DMM / FANZA、duja、syukou-club、x-diablo 等），自动随上游更新；另有 `conf` 内手动补充的厂商 `DOMAIN-SUFFIX` 规则（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
 - missav 使用上游 RULE-SET：sub-kek/shadowrocket-lists `shadowrocket/missav.list`；`javdb`、`javbus` 等聚合站仍为 `conf` 内的 `DOMAIN-SUFFIX` 规则
 
