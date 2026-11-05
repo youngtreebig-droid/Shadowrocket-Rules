@@ -53,7 +53,7 @@
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🔞 日本AV | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
-| 🎬 missav | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
+| missav | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
 | 📹 油管视频 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | Ⓜ️ 微软服务 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
@@ -78,7 +78,8 @@
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
-- 日本AV 片商域名（DMM / FANZA、S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等）为手动整理的 `DOMAIN-SUFFIX` 规则，来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
+- 日本AV 使用上游 RULE-SET：mediacvg/ytnfst `jpav.list`（DMM / FANZA、duja、syukou-club、x-diablo 等），自动随上游更新；另有 `conf` 内手动补充的厂商 `DOMAIN-SUFFIX` 规则（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
+- missav 使用上游 RULE-SET：sub-kek/shadowrocket-lists `shadowrocket/missav.list`；`javdb`、`javbus` 等聚合站仍为 `conf` 内的 `DOMAIN-SUFFIX` 规则
 
 ## Star History
 
