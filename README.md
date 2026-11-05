@@ -31,15 +31,16 @@
 | 3 | 🤖 AI 服务（ChatGPT、Claude、苹果智能等） | 美国节点 |
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
-| 6 | 📲 电报消息 | PROXY（固定） |
-| 7 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 8 | Ⓜ️ 微软服务 | 节点选择 |
-| 9 | 🍎 苹果推送 | DIRECT |
-| 10 | 🍏 苹果服务 | DIRECT |
-| 11 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 12 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
-| 13 | 🐟 漏网之鱼（兜底，含非中国境外流量） | PROXY |
-| 14 | GEOIP CN | DIRECT |
+| 6 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | PROXY |
+| 7 | 📲 电报消息 | PROXY（固定） |
+| 8 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
+| 9 | Ⓜ️ 微软服务 | 节点选择 |
+| 10 | 🍎 苹果推送 | DIRECT |
+| 11 | 🍏 苹果服务 | DIRECT |
+| 12 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
+| 13 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
+| 14 | 🐟 漏网之鱼（兜底，含非中国境外流量） | PROXY |
+| 15 | GEOIP CN | DIRECT |
 
 
 ## 默认策略
@@ -50,6 +51,7 @@
 | 🔍 谷歌服务 | 🇯🇵 日本节点 | 🇭🇰 香港节点、🇺🇸 美国节点、节点选择、PROXY、DIRECT |
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
+| 🔞 日本AV | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
 | 📹 油管视频 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | Ⓜ️ 微软服务 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
@@ -74,6 +76,7 @@
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
+- 日本AV 片商域名（DMM / FANZA、S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等）为手动整理的 `DOMAIN-SUFFIX` 规则，来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
 
 ## Star History
 
