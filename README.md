@@ -32,15 +32,16 @@
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 6 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | PROXY |
-| 7 | 📲 电报消息 | PROXY（固定） |
-| 8 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 9 | Ⓜ️ 微软服务 | 节点选择 |
-| 10 | 🍎 苹果推送 | DIRECT |
-| 11 | 🍏 苹果服务 | DIRECT |
-| 12 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 13 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
-| 14 | 🐟 漏网之鱼（兜底，含非中国境外流量） | PROXY |
-| 15 | GEOIP CN | DIRECT |
+| 7 | missav（missav 及 JAV 聚合 / 在线观看站） | PROXY |
+| 8 | 📲 电报消息 | PROXY（固定） |
+| 9 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
+| 10 | Ⓜ️ 微软服务 | 节点选择 |
+| 11 | 🍎 苹果推送 | DIRECT |
+| 12 | 🍏 苹果服务 | DIRECT |
+| 13 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
+| 14 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
+| 15 | 🐟 漏网之鱼（兜底，含非中国境外流量） | PROXY |
+| 16 | GEOIP CN | DIRECT |
 
 
 ## 默认策略
@@ -52,6 +53,7 @@
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🔞 日本AV | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
+| 🎬 missav | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
 | 📹 油管视频 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | Ⓜ️ 微软服务 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
