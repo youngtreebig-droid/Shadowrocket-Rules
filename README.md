@@ -27,8 +27,8 @@
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
 | 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | 节点选择，可切换 DIRECT 或地区节点 |
-| 2 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港、美国节点 |
-| 3 | 🤖 AI 服务（ChatGPT、Claude、Grok、苹果智能等） | 美国节点 |
+| 2 | 🤖 AI 服务（ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Perplexity、苹果智能等） | 美国节点 |
+| 3 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 6 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
@@ -81,9 +81,12 @@
 
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
+- [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) — 🤖 AI 服务主要上游，按厂商引用 `rules/shadowrocket/` 下的 `google-ai`、`anthropic`、`kiro`、`x-ai`、`cursor`（Grok Bot 云端电脑走 Cursor 基础设施）、`openai`；另叠加 blackmatrix7 `Gemini.list`、`Claude.list` 和上游 LingJingMaster `AI.list`
+- 🤖 AI 服务规则整体放在 `Google.list` 之前，避免 Gemini、AI Studio、NotebookLM 等域名被 🔍 谷歌服务提前匹配
+- 上游未覆盖、在 `conf` 内手动补充的域名：Kiro 的 `kiro.aws.dev`（遥测）、`cognito-identity.us-east-1.amazonaws.com` 与 `kiro-prod-us-east-1.auth.us-east-1.amazoncognito.com`（Google / GitHub 登录），来源 [Kiro 防火墙文档](https://kiro.dev/docs/privacy-and-security/firewalls/)；Grok 的 `grokusercontent.com`、`spacex.ai`，来源 [xAI 登录域名文档](https://docs.x.ai/x-subscription/sign-in-domains)
 - `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
-- Grok / xAI 使用上游 RULE-SET：BlackSpacee/Surge `Ruleset/AIGC/xAI.list`（grok.com、x.ai）；`grokusercontent.com`（附件 / 图片）为 `conf` 内的 `DOMAIN-SUFFIX` 规则，均归入 🤖 AI 服务；Grok Bot 云端电脑相关的 `cursor.sh`、`cursor-cdn.com`、`cursorapi.com`、`cursorvm.com`、`accounts.spacex.ai` 同样归入 🤖 AI 服务（来源为 Grok Bot 代理白名单的二手资料，未能在线核实）
+- Grok / xAI 使用上游 RULE-SET：VPSDance `x-ai.list` + BlackSpacee/Surge `Ruleset/AIGC/xAI.list`；Grok Bot 所需的 `cursor.sh`、`cursor-cdn.com`、`cursorapi.com`、`cursorvm.com`、`cursor.com` 由 VPSDance `cursor.list` 提供，已对照 [Grok Bot 代理文档](https://docs.x.ai/grok-bot/proxies) 核实
 - 日本AV 使用上游 RULE-SET：mediacvg/ytnfst `jpav.list`（DMM / FANZA、duja、syukou-club、x-diablo 等），自动随上游更新；另有 `conf` 内手动补充的厂商 `DOMAIN-SUFFIX` 规则（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
 - missav 使用上游 RULE-SET：sub-kek/shadowrocket-lists `shadowrocket/missav.list`；`javdb`、`javbus` 等聚合站仍为 `conf` 内的 `DOMAIN-SUFFIX` 规则
 
