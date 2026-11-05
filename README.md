@@ -26,39 +26,41 @@
 
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
-| 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | PROXY，可切换 DIRECT 或地区节点 |
+| 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | 节点选择，可切换 DIRECT 或地区节点 |
 | 2 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港、美国节点 |
 | 3 | 🤖 AI 服务（ChatGPT、Claude、苹果智能等） | 美国节点 |
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
-| 6 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | PROXY |
-| 7 | missav（missav 及 JAV 聚合 / 在线观看站） | PROXY |
-| 8 | 📲 电报消息 | PROXY（固定） |
-| 9 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 10 | Ⓜ️ 微软服务 | 节点选择 |
-| 11 | 🍎 苹果推送 | DIRECT |
-| 12 | 🍏 苹果服务 | DIRECT |
-| 13 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 14 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
-| 15 | 🐟 漏网之鱼（兜底，含非中国境外流量） | PROXY |
-| 16 | GEOIP CN | DIRECT |
+| 6 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
+| 7 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 节点选择 |
+| 8 | missav（missav 及 JAV 聚合 / 在线观看站） | 节点选择 |
+| 9 | 📲 电报消息 | PROXY（固定） |
+| 10 | 🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
+| 11 | Ⓜ️ 微软服务 | 节点选择 |
+| 12 | 🍎 苹果推送 | DIRECT |
+| 13 | 🍏 苹果服务 | DIRECT |
+| 14 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
+| 15 | 🔒 哔哩哔哩 / 国内服务 / 🏠 私有网络 | DIRECT（固定） |
+| 16 | 🐟 漏网之鱼（兜底，含非中国境外流量） | 节点选择 |
+| 17 | GEOIP CN | DIRECT |
 
 
 ## 默认策略
 
 | 服务 | 默认策略 | 可选策略 |
 |------|----------|----------|
-| 📧 邮件服务 | PROXY | DIRECT、节点选择、美国 / 日本 / 香港节点 |
+| 📧 邮件服务 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
+| 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、日本 / 美国节点 |
 | 🔍 谷歌服务 | 🇯🇵 日本节点 | 🇭🇰 香港节点、🇺🇸 美国节点、节点选择、PROXY、DIRECT |
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
-| 🔞 日本AV | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
-| missav | PROXY | DIRECT、REJECT、节点选择、日本 / 美国 / 香港节点 |
+| 🔞 日本AV | 🚀 节点选择 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
+| missav | 🚀 节点选择 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
 | 📹 油管视频 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | Ⓜ️ 微软服务 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 | 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🍏 苹果服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
-| 🐟 漏网之鱼 | PROXY | 节点选择、DIRECT、美国 / 日本 / 香港节点 |
+| 🐟 漏网之鱼 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 
 - 🌐 其他节点 / 🇭🇰 / 🇹🇼 / 🇯🇵 / 🇺🇸 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
 - 固定策略（不在策略组中，直接写入规则）：
