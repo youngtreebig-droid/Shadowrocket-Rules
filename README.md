@@ -27,8 +27,8 @@
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
 | 1 | 📧 邮件服务（IMAP / POP3 / SMTP） | 节点选择，可切换 DIRECT 或地区节点 |
-| 2 | 🔍 谷歌服务（含 Gemini） | 日本节点，可手动切香港、美国节点 |
-| 3 | 🤖 AI 服务（ChatGPT、Claude、Grok、苹果智能等） | 美国节点 |
+| 2 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务） | 美国节点 |
+| 3 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
 | 4 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
 | 5 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 6 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
@@ -81,9 +81,15 @@
 
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
+- 🤖 AI 服务（规则整体放在 `Google.list`、`Microsoft.list` 之前，避免 Gemini、Copilot 被 🔍 谷歌服务 / Ⓜ️ 微软服务提前匹配；国内 AI 不在此组）：
+  - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
+  - [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) `geosite:category-ai-!cn`，Shadowrocket 格式由 [ddranic/ios-proxy-rules](https://github.com/ddranic/ios-proxy-rules) 每日转换
+  - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) `OpenAI`、`Copilot`、`Gemini`、`Claude`
+  - 上游 LingJingMaster `AI.list`（苹果智能等）
+  - `conf` 内手动补充上游未收录的域名：Kiro 的 `kiro.aws.dev`、Cognito 登录端点（来源 [Kiro 防火墙文档](https://kiro.dev/docs/privacy-and-security/firewalls/)）；Grok 的 `grokusercontent.com`、`spacex.ai`（来源 [xAI 登录域名文档](https://docs.x.ai/x-subscription/sign-in-domains)）；以及 Le Chat、Krea、Higgsfield、Luma、Black Forest Labs、Tensor.Art、Warp、TypingMind、ChatPDF、Elicit、Consensus
+  - 注意：上游为保证 AI 服务完整可用，也收录了少量通用域名（如 `storage.googleapis.com`、`apis.google.com`、`intercom.io`，以及含 `sentry`、`datadog` 关键字的域名），这些流量同样会走 🤖 AI 服务
 - `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
-- Grok / xAI 使用上游 RULE-SET：BlackSpacee/Surge `Ruleset/AIGC/xAI.list`（grok.com、x.ai）；`grokusercontent.com`（附件 / 图片）为 `conf` 内的 `DOMAIN-SUFFIX` 规则，均归入 🤖 AI 服务；Grok Bot 云端电脑相关的 `cursor.sh`、`cursor-cdn.com`、`cursorapi.com`、`cursorvm.com`、`accounts.spacex.ai` 同样归入 🤖 AI 服务（来源为 Grok Bot 代理白名单的二手资料，未能在线核实）
 - 日本AV 使用上游 RULE-SET：mediacvg/ytnfst `jpav.list`（DMM / FANZA、duja、syukou-club、x-diablo 等），自动随上游更新；另有 `conf` 内手动补充的厂商 `DOMAIN-SUFFIX` 规则（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
 - missav 使用上游 RULE-SET：sub-kek/shadowrocket-lists `shadowrocket/missav.list`；`javdb`、`javbus` 等聚合站仍为 `conf` 内的 `DOMAIN-SUFFIX` 规则
 
