@@ -32,8 +32,8 @@
 | 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务） | 美国节点 |
 | 5 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix 风控域名例外放行） | REJECT |
 | 6 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
-| 7 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
-| 8 | 📹 油管视频（含 YouTube 翻译 API） | 节点选择 |
+| 7 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被谷歌分组截走） | 节点选择 |
+| 8 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
 | 9 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 10 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
 | 11 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
@@ -53,6 +53,7 @@
 - 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务（例如 Gemini 被谷歌分组截走）
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
+- 你自己的分组（AI、油管、谷歌、TikTok、Netflix、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 广告拦截放在 🤖 AI 服务之后、谷歌和国内直连等大列表之前：AI 依赖的统计域名（statsig、datadog 等）不会被误杀，doubleclick、admob 等广告域名又能先被拦截
 
 
