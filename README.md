@@ -33,16 +33,16 @@
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（固定） |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
 | 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
-| 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 节点选择 |
+| 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 香港节点 |
 | 9 | 🔍 谷歌全系服务（`Google.list`，已合并入 🤖 AI 服务，保证搜索 AI 概览 / AI 模式与 Gemini 出口一致） | 🤖 AI 服务（日本节点） |
-| 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
+| 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
-| 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 节点选择 |
+| 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
 | 13 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
 | 14 | missav（missav 及 JAV 聚合 / 在线观看站） | 香港节点 |
 | 15 | 哔哩哔哩 | DIRECT（固定） |
 | 16 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 17 | Ⓜ️ 微软服务 | 美国节点 |
+| 17 | Ⓜ️ 微软服务 | 香港节点 |
 | 18 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
 | 19 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT |
 | 20 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
@@ -69,20 +69,20 @@
 |------|----------|----------|
 | 📧 邮件服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、日本 / 美国节点 |
-| 🎧 Spotify | 🚀 节点选择 | PROXY、DIRECT、REJECT、美国 / 日本 / 香港节点 |
+| 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、美国 / 日本节点 |
 | 🤖 AI 服务（含 Google 全系） | 🇯🇵 日本节点 | 美国节点、节点选择、PROXY、DIRECT、香港节点 |
-| 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
+| 🎵 TikTok | 🇯🇵 日本节点 | 美国节点、节点选择、PROXY、DIRECT、香港节点 |
 | 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
 | missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
-| 📹 油管视频 | 🚀 节点选择 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
-| Ⓜ️ 微软服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本 / 香港节点 |
+| 📹 油管视频 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、美国 / 日本节点 |
+| Ⓜ️ 微软服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、美国 / 日本节点 |
 | 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🍏 苹果服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🐟 漏网之鱼 | 🇭🇰 香港节点 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
 
 - 🚀 节点选择 默认 PROXY（即首页当前选中的节点）
-- 🇯🇵 日本节点 / 🇺🇸 美国节点 为手动选择组，默认分别为 `TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`，不做倍率过滤，可在组内改选
-- 🌐 其他节点 / 🇭🇰 / 🇹🇼 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
+- 🇭🇰 香港节点 / 🇯🇵 日本节点 / 🇺🇸 美国节点 为手动选择组，默认分别为 `🇭🇰 香港 01 | 上海电信中转`、`TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`，不做倍率过滤，可在组内改选
+- 🌐 其他节点 / 🇹🇼 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
 - 固定策略（不在策略组中，直接写入规则）：
 - 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed）、📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
 - 🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
