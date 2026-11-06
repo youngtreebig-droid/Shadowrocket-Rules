@@ -99,7 +99,7 @@
 - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `cn.list` — 国内 AI 直连
 - 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `proxy`（包含 `gfw` 全部域名）、`telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，国内可直连的学术期刊、阿里云国际站等优先直连
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
-- 🤖 AI 服务（规则整体放在 `Google.list`、`Microsoft.list` 之前，避免 Gemini、Copilot 被 🔍 谷歌服务 / Ⓜ️ 微软服务提前匹配；国内 AI 不在此组）：
+- 🤖 AI 服务（规则整体放在 `Google.list`、`Microsoft.list` 之前，避免 Gemini、Copilot 被 🔍 谷歌服务 / Ⓜ️ 微软服务提前匹配；国内 AI 和字节的海外 AI 产品（Trae、MarsCode、Coze、Cici / Dola）不在此组）：
   - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
   - [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) `geosite:category-ai-!cn`，Shadowrocket 格式由 [ddranic/ios-proxy-rules](https://github.com/ddranic/ios-proxy-rules) 每日转换
   - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) `OpenAI`、`Copilot`、`Gemini`、`Claude`
