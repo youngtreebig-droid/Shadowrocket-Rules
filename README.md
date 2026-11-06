@@ -28,7 +28,7 @@
 |--------|------|----------|
 | 1 | 🧱 WebRTC 防泄露（UDP 3478 / 5349 / 19302-19309 的 STUN 流量） | 国内 IP 直连，其余 REJECT |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
-| 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`） | DIRECT（固定） |
+| 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
 | 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务） | 美国节点 |
 | 5 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix 风控域名例外放行） | REJECT |
 | 6 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
@@ -55,6 +55,7 @@
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - 你自己的分组（AI、油管、谷歌、TikTok、Netflix、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 谷歌账号登录（`accounts.youtube.com`、`apis.google.com`）和谷歌自家统计 / 崩溃上报（Firebase、Crashlytics、`gvt2.com` 等）单独放在最前面，固定走 🔍 谷歌服务：保证登录时所有谷歌域名出口一致，避免触发"验证设备"，也避免 Gmail 因统计请求被拦而报"无网络连接"；谷歌广告仍然拦截
+- 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`，v2fly `douyin`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - 广告拦截放在 🤖 AI 服务之后、谷歌和国内直连等大列表之前：AI 依赖的统计域名（statsig、datadog 等）不会被误杀，doubleclick、admob 等广告域名又能先被拦截
 
 
