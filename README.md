@@ -29,12 +29,12 @@
 | 1 | 🧱 WebRTC 防泄露（UDP 3478 / 5349 / 19302-19309 的 STUN 流量） | 国内 IP 直连，其余 REJECT |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
 | 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
-| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 登录与自家统计前置入此组） | 美国节点 |
+| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 登录与自家统计前置入此组） | 日本节点 |
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（固定） |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
 | 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
 | 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 节点选择 |
-| 9 | 🔍 谷歌全系服务（`Google.list`，已合并入 🤖 AI 服务，保证搜索 AI 概览 / AI 模式与 Gemini 出口一致） | 🤖 AI 服务（美国节点） |
+| 9 | 🔍 谷歌全系服务（`Google.list`，已合并入 🤖 AI 服务，保证搜索 AI 概览 / AI 模式与 Gemini 出口一致） | 🤖 AI 服务（日本节点） |
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 节点选择 |
@@ -70,7 +70,7 @@
 | 📧 邮件服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、日本 / 美国节点 |
 | 🎧 Spotify | 🚀 节点选择 | PROXY、DIRECT、REJECT、美国 / 日本 / 香港节点 |
-| 🤖 AI 服务（含 Google 全系） | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
+| 🤖 AI 服务（含 Google 全系） | 🇯🇵 日本节点 | 美国节点、节点选择、PROXY、DIRECT、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
 | missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
