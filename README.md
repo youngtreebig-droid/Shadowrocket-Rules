@@ -36,24 +36,25 @@
 | 8 | 🔍 谷歌服务（Gemini 等 Google AI 已前置到 🤖 AI 服务） | 美国节点，可手动切日本、香港节点 |
 | 9 | 🎵 TikTok（抖音国际版 / CapCut 等） | 美国节点 |
 | 10 | 🎬 Netflix（blackmatrix7 `Shadowrocket/Netflix/Netflix.list`） | 香港节点 |
-| 11 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
-| 12 | missav（missav 及 JAV 聚合 / 在线观看站） | 香港节点 |
-| 13 | 哔哩哔哩 | DIRECT（固定） |
-| 14 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
-| 15 | Ⓜ️ 微软服务 | 美国节点 |
-| 16 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 17 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT |
-| 18 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
-| 19 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`，Loyalsoldier `proxy`） | PROXY（固定） |
-| 20 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`、`GlobalMedia`，Loyalsoldier `telegramcidr`）→ PROXY | 见左 |
-| 21 | GEOIP CN | DIRECT |
-| 22 | 🐟 漏网之鱼（所有列表都没匹配到的流量） | 香港节点 |
+| 11 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 节点选择 |
+| 12 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
+| 13 | missav（missav 及 JAV 聚合 / 在线观看站） | 香港节点 |
+| 14 | 哔哩哔哩 | DIRECT（固定） |
+| 15 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
+| 16 | Ⓜ️ 微软服务 | 美国节点 |
+| 17 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
+| 18 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT |
+| 19 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
+| 20 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`，Loyalsoldier `proxy`） | PROXY（固定） |
+| 21 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`、`GlobalMedia`，Loyalsoldier `telegramcidr`）→ PROXY | 见左 |
+| 22 | GEOIP CN | DIRECT |
+| 23 | 🐟 漏网之鱼（所有列表都没匹配到的流量） | 香港节点 |
 
 规则从上往下匹配，命中即停。排序原则：
 - 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务（例如 Gemini 被谷歌分组截走）
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
-- 你自己的分组（AI、油管、谷歌、TikTok、Netflix、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
+- 你自己的分组（AI、油管、谷歌、TikTok、Netflix、Spotify、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 谷歌账号登录（`accounts.youtube.com`、`apis.google.com`）和谷歌自家统计 / 崩溃上报（Firebase、Crashlytics、`gvt2.com` 等）单独放在最前面，固定走 🔍 谷歌服务：保证登录时所有谷歌域名出口一致，避免触发"验证设备"，也避免 Gmail 因统计请求被拦而报"无网络连接"；谷歌广告仍然拦截
 - 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`，v2fly `douyin`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - TikTok 自家域名（v2fly `tiktok` 和 `isnssdk.com`、`capcutapi.com` 等）放在广告拦截之前，统一走 🎵 TikTok：广告拦截列表会拦 TikTok 的私信、长连接、网络调度和安全 SDK，导致好友页、私信一直加载；TikTok 信息流广告和视频走同一组接口，按域名本来就拦不掉。TikTok 网页追踪像素（`analytics.tiktok.com`）、广告后台 `ads.tiktok.com` 和 Pangle 广告联盟继续拦截
@@ -66,6 +67,7 @@
 |------|----------|----------|
 | 📧 邮件服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、日本 / 美国节点 |
+| 🎧 Spotify | 🚀 节点选择 | PROXY、DIRECT、REJECT、美国 / 日本 / 香港节点 |
 | 🔍 谷歌服务 | 🇺🇸 美国节点 | 🇭🇰 香港节点、🇯🇵 日本节点、节点选择、PROXY、DIRECT |
 | 🤖 AI 服务 | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
 | 🎵 TikTok | 🇺🇸 美国节点 | 节点选择、PROXY、DIRECT、日本节点、香港节点 |
@@ -81,7 +83,7 @@
 - 🇯🇵 日本节点 / 🇺🇸 美国节点 为手动选择组，默认分别为 `TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`，不做倍率过滤，可在组内改选
 - 🌐 其他节点 / 🇭🇰 / 🇹🇼 自动组默认过滤掉倍率 ≥ 1 的节点（节点名需带 `[倍率]`，如 `[6.0]`），需要时可在「节点选择」里手动选择
 - 固定策略（不在策略组中，直接写入规则）：
-- 📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Spotify、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
+- 📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
 - 🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
 - 🔐 1Password → DIRECT（上游 EliDoves/Proxy `1Password.list` + 官方文档补充域名；1Password 无公开固定 IP，按域名匹配）
 - 🧱 DNS 防泄露、WebRTC 防泄露、🛑 广告 / 追踪（Loyalsoldier `reject`） → REJECT
