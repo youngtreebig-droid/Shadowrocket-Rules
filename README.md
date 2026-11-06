@@ -54,6 +54,7 @@
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - 你自己的分组（AI、油管、谷歌、TikTok、Netflix、日本AV、missav、微软、苹果等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
+- 谷歌账号登录（`accounts.youtube.com`、`apis.google.com`）和谷歌自家统计 / 崩溃上报（Firebase、Crashlytics、`gvt2.com` 等）单独放在最前面，固定走 🔍 谷歌服务：保证登录时所有谷歌域名出口一致，避免触发"验证设备"，也避免 Gmail 因统计请求被拦而报"无网络连接"；谷歌广告仍然拦截
 - 广告拦截放在 🤖 AI 服务之后、谷歌和国内直连等大列表之前：AI 依赖的统计域名（statsig、datadog 等）不会被误杀，doubleclick、admob 等广告域名又能先被拦截
 
 
