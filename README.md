@@ -67,21 +67,22 @@
 
 | 服务 | 默认策略 | 可选策略 |
 |------|----------|----------|
-| 📧 邮件服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
-| 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、日本 / 美国节点 |
-| 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、美国 / 日本节点 |
-| 🤖 AI 服务（含 Google 全系） | 🇯🇵 日本节点 | 美国节点、节点选择、PROXY、DIRECT、香港节点 |
-| 🎵 TikTok | 🇯🇵 日本节点 | 美国节点、节点选择、PROXY、DIRECT、香港节点 |
-| 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
-| missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、日本 / 美国 / 香港节点 |
-| 📹 油管视频 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、美国 / 日本节点 |
-| Ⓜ️ 微软服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、美国 / 日本节点 |
-| 🍎 苹果推送 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
-| 🍏 苹果服务 | DIRECT | 节点选择、PROXY、美国 / 日本 / 香港节点 |
-| 🐟 漏网之鱼 | 🇭🇰 香港节点 | PROXY、DIRECT、美国 / 日本 / 香港节点 |
+| 📧 邮件服务 | DIRECT | 节点选择、PROXY、REJECT、所有地区节点 |
+| 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🤖 AI 服务（含 Google 全系） | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🎵 TikTok | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
+| missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
+| 📹 油管视频 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| Ⓜ️ 微软服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🍎 苹果推送 | DIRECT | 节点选择、PROXY、REJECT、所有地区节点 |
+| 🍏 苹果服务 | DIRECT | 节点选择、PROXY、REJECT、所有地区节点 |
+| 🐟 漏网之鱼 | 🇭🇰 香港节点 | PROXY、节点选择、DIRECT、REJECT、其他地区节点 |
 
 - 🚀 节点选择 默认 PROXY（即首页当前选中的节点）
-- 地区分组全部是手动选择组（select），不测速、不做倍率过滤，可在组内改选。🇭🇰 香港节点 / 🇯🇵 日本节点 / 🇺🇸 美国节点 默认分别为 `🇭🇰 香港 01 | 上海电信中转`、`TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`；🇹🇼 台湾节点 / 🇰🇷 韩国节点 / 🇸🇬 新加坡节点 / 🌏 亚洲其他节点 / 🌐 全球其他节点 默认是组内第一个节点，在 🚀 节点选择 里选用
+- 地区分组全部是手动选择组（select），不测速、不做倍率过滤，可在组内改选。🇭🇰 香港节点 / 🇯🇵 日本节点 / 🇺🇸 美国节点 默认分别为 `🇭🇰 香港 01 | 上海电信中转`、`TOKYO2-VLESS`、`美国-166.0.26.50 (53467测试)`；🇹🇼 台湾节点 / 🇰🇷 韩国节点 / 🇸🇬 新加坡节点 / 🌏 亚洲其他节点 / 🌐 全球其他节点 默认是组内第一个节点
+- 每个策略组都能直接选所有地区节点：🇭🇰 香港、🇹🇼 台湾、🇯🇵 日本、🇰🇷 韩国、🇸🇬 新加坡、🇺🇸 美国、🌏 亚洲其他、🌐 全球其他
 - 地区分组按节点名里的国旗和中英文地名匹配。🌏 亚洲其他节点：以上地区之外的亚洲节点，包括澳门、东南亚、南亚、中亚、中东和土耳其；🌐 全球其他节点：剩下的所有节点，不含机场订阅里“剩余流量”“套餐到期”这类信息条目
 - 固定策略（不在策略组中，直接写入规则）：
 - 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed）、📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
