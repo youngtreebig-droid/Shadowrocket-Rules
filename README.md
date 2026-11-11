@@ -29,12 +29,12 @@
 | 1 | 🧱 WebRTC 防泄露（UDP 3478 / 5349 / 19302-19309 的 STUN 流量） | 国内 IP 直连，其余 REJECT |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
 | 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
-| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Gemini / AI Studio / NotebookLM、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 登录与自家统计前置入此组） | 日本节点 |
+| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini） | 日本节点 |
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（首页当前选中的节点），可在分组里切换 |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
 | 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
 | 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 香港节点 |
-| 9 | 🔍 谷歌全系服务（`Google.list`，已合并入 🤖 AI 服务，保证搜索 AI 概览 / AI 模式与 Gemini 出口一致） | 🤖 AI 服务（日本节点） |
+| 9 | 🔍 谷歌与 Gemini（`Google.list` + `GoogleAI.list` + blackmatrix7 `Gemini.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 日本节点 |
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Netflix.list` + Netflix 自己的 AWS 地址；修正了上游的过宽规则，AWS 改走 🤖 AI 服务、OneTrust Cookie 弹窗改走 PROXY） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
@@ -56,7 +56,7 @@
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
-- 谷歌全系（`Google.list`）已合并入 🤖 AI 服务，排在 📹 油管视频之后、国内直连 `ChinaMax` 之前：油管视频流仍走 📹 油管视频，而 Google 搜索、登录（`accounts.youtube.com`、`apis.google.com`）、前端静态资源（`gstatic`、`recaptcha`）和自家统计（Firebase、Crashlytics、`gvt2.com` 等）全部与 Gemini 走同一个 🤖 AI 服务出口，既保证搜索里的 AI 概览 / AI 模式可用，又避免触发 Google "验证设备"；谷歌广告仍然拦截
+- 谷歌全系（`Google.list`）与 Gemini 单独走 🔍 谷歌与 Gemini（默认日本节点；原因：韩国节点被 Google 误判为香港，Gemini 不可用，且 ChatGPT / Claude 等仍可继续用韩国），排在 📹 油管视频之后、国内直连 `ChinaMax` 之前：油管视频流仍走 📹 油管视频，而 Google 搜索、登录（`accounts.youtube.com`、`apis.google.com`）、前端静态资源（`gstatic`、`recaptcha`）和自家统计（Firebase、Crashlytics、`gvt2.com` 等）全部与 Gemini 走同一个 🔍 谷歌与 Gemini 出口，既保证搜索里的 AI 概览 / AI 模式可用，又避免触发 Google "验证设备"；谷歌广告仍然拦截
 - Speedtest 测速规则放在广告拦截和国内直连之前，走 📶 测速服务（默认 PROXY，即首页当前选中的节点），避免 `sgtm.ookla.com` 被拦截或测速连接在直连与代理之间分裂报错
 - 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`，v2fly `douyin`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - TikTok 自家域名（v2fly `tiktok` 和 `isnssdk.com`、`capcutapi.com` 等）放在广告拦截之前，统一走 🎵 TikTok：广告拦截列表会拦 TikTok 的私信、长连接、网络调度和安全 SDK，导致好友页、私信一直加载；TikTok 信息流广告和视频走同一组接口，按域名本来就拦不掉。TikTok 网页追踪像素（`analytics.tiktok.com`）、广告后台 `ads.tiktok.com` 和 Pangle 广告联盟继续拦截
