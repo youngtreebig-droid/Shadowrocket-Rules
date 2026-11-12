@@ -53,6 +53,7 @@
 规则从上往下匹配，命中即停。排序原则：
 - 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
+- DNS：`dns-server` 用阿里和腾讯的加密 DNS（DoH）。它只用来查直连的网站，以及没被任何列表认出、要查到 IP 才能用 `GEOIP,CN` 判断的网站；走代理的网站由代理服务器在海外查，不经过它，所以不受 DNS 污染影响。用国内 DNS，国内网站拿到的是国内服务器地址，节点断了也能查。主 DNS 查询失败时才用 `fallback-dns-server`（Google，经代理）
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 谷歌全系（`Google.list`）与 Gemini 单独走 🔍 谷歌与 Gemini（默认日本节点；原因：韩国节点被 Google 误判为香港，Gemini 不可用，且 ChatGPT / Claude 等仍可继续用韩国），排在 📹 油管视频之后、国内直连 `ChinaMax` 之前：油管视频流仍走 📹 油管视频，而 Google 搜索、登录（`accounts.youtube.com`、`apis.google.com`）、前端静态资源（`gstatic`、`recaptcha`）和自家统计（Firebase、Crashlytics、`gvt2.com` 等）全部与 Gemini 走同一个 🔍 谷歌与 Gemini 出口，既保证搜索里的 AI 概览 / AI 模式可用，又避免触发 Google "验证设备"；谷歌广告仍然拦截
