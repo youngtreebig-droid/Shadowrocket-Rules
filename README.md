@@ -6,7 +6,6 @@
 
 一份开箱即用的 小火箭 Shadowrocket 规则配置
 - 支持前沿的苹果智能（Apple Intelligence）
-- 在新规下的香港券商访问
 - 导入后添加自己的节点或订阅即可使用
 
 ## 快速开始
@@ -32,9 +31,9 @@
 | 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini） | 日本节点 |
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（首页当前选中的节点），可在分组里切换 |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
-| 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | DIRECT，可切换节点 |
+| 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | 香港节点，可切换 |
 | 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 香港节点 |
-| 9 | 🔍 谷歌与 Gemini（`Google.list` + `GoogleAI.list` + blackmatrix7 `Gemini.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 日本节点 |
+| 9 | 🔍 谷歌与 Gemini（`Google.list` + VPSDance `google-ai.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 日本节点 |
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Netflix.list` + Netflix 自己的 AWS 地址；修正了上游的过宽规则，AWS 改走 🤖 AI 服务、OneTrust Cookie 弹窗改走 PROXY） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
@@ -43,10 +42,10 @@
 | 15 | 哔哩哔哩 | DIRECT（固定） |
 | 16 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
 | 17 | Ⓜ️ 微软服务 | 香港节点 |
-| 18 | 🏦 汇丰香港 / 香港银行 / 📈 券商服务 | DIRECT（固定） |
-| 19 | 🍎 苹果推送、🍏 苹果服务（另加 Loyalsoldier `apple`、`icloud`） | DIRECT（固定） |
+| 18 | 🏦 汇丰香港 / 香港银行 | DIRECT（固定） |
+| 19 | 🍎 苹果推送、🍏 苹果服务 | DIRECT（固定） |
 | 20 | 🇨🇳 国内域名（blackmatrix7 `ChinaMax_Domain`） | DIRECT（固定） |
-| 21 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`，Loyalsoldier `proxy`） | PROXY（固定） |
+| 21 | 🌐 境外域名（blackmatrix7 `Global_Domain`、`GlobalMedia_Domain`） | PROXY（固定） |
 | 22 | 含 IP 的规则：国内 IP / 关键字（blackmatrix7 `ChinaMax`）→ DIRECT；境外 IP / 关键字（blackmatrix7 `Global`、`GlobalMedia`，Loyalsoldier `telegramcidr`）→ PROXY | 见左 |
 | 23 | GEOIP CN | DIRECT |
 | 24 | 🐟 漏网之鱼（所有列表都没匹配到的流量） | 香港节点 |
@@ -54,11 +53,12 @@
 规则从上往下匹配，命中即停。排序原则：
 - 精确、小范围的规则放前面，大而全的国内 / 境外列表放后面，避免大列表抢走需要单独分流的服务
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
+- DNS：`dns-server` 用阿里和腾讯的加密 DNS（DoH）。它只用来查直连的网站，以及没被任何列表认出、要查到 IP 才能用 `GEOIP,CN` 判断的网站；走代理的网站由代理服务器在海外查，不经过它，所以不受 DNS 污染影响。用国内 DNS，国内网站拿到的是国内服务器地址，节点断了也能查。主 DNS 查询失败时才用 `fallback-dns-server`（Google，经代理）
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
-- 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global、Loyalsoldier `proxy` 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
+- 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 谷歌全系（`Google.list`）与 Gemini 单独走 🔍 谷歌与 Gemini（默认日本节点；原因：韩国节点被 Google 误判为香港，Gemini 不可用，且 ChatGPT / Claude 等仍可继续用韩国），排在 📹 油管视频之后、国内直连 `ChinaMax` 之前：油管视频流仍走 📹 油管视频，而 Google 搜索、登录（`accounts.youtube.com`、`apis.google.com`）、前端静态资源（`gstatic`、`recaptcha`）和自家统计（Firebase、Crashlytics、`gvt2.com` 等）全部与 Gemini 走同一个 🔍 谷歌与 Gemini 出口，既保证搜索里的 AI 概览 / AI 模式可用，又避免触发 Google "验证设备"；谷歌广告仍然拦截
 - Speedtest 测速规则放在广告拦截和国内直连之前，走 📶 测速服务（默认 PROXY，即首页当前选中的节点），避免 `sgtm.ookla.com` 被拦截或测速连接在直连与代理之间分裂报错
-- 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`，v2fly `douyin`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
+- 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - TikTok 自家域名（v2fly `tiktok` 和 `isnssdk.com`、`capcutapi.com` 等）放在广告拦截之前，统一走 🎵 TikTok：广告拦截列表会拦 TikTok 的私信、长连接、网络调度和安全 SDK，导致好友页、私信一直加载；TikTok 信息流广告和视频走同一组接口，按域名本来就拦不掉。TikTok 网页追踪像素（`analytics.tiktok.com`）、广告后台 `ads.tiktok.com` 和 Pangle 广告联盟继续拦截
 - 广告拦截放在 🤖 AI 服务之后、谷歌和国内直连等大列表之前：AI 依赖的统计域名（statsig、datadog 等）不会被误杀，doubleclick、admob 等广告域名又能先被拦截
 
@@ -67,7 +67,7 @@
 
 | 服务 | 默认策略 | 可选策略 |
 |------|----------|----------|
-| 📧 邮件服务 | DIRECT | 节点选择、PROXY、REJECT、所有地区节点 |
+| 📧 邮件服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🤖 AI 服务（含 Google 全系、Notion、AWS） | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
@@ -87,7 +87,8 @@
 - 固定策略（不在策略组中，直接写入规则）：
 - 📲 电报消息、🐱 代码托管、🌐 其他境外服务（Twitter / X、Facebook、Instagram、Reddit、Wikipedia、Discord、Disney+、Twitch 等，不在分组里的都算） → PROXY，即首页当前选中的节点
 - OneTrust Cookie 弹窗（`cookielaw.org`、`onetrust.com`） → PROXY
-- 🍎 苹果推送、🍏 苹果服务、🏦 汇丰香港、🏦 香港银行、📈 券商服务、🔒 国内服务、🏠 私有网络 → DIRECT
+- 🍎 苹果推送、🍏 苹果服务、🏦 汇丰香港、🏦 香港银行、🔒 国内服务、🏠 私有网络 → DIRECT
+- 港股券商不单独处理，按通用规则分流
 - 🔐 1Password → DIRECT（上游 EliDoves/Proxy `1Password.list` + 官方文档补充域名；1Password 无公开固定 IP，按域名匹配）
 - 🧱 DNS 防泄露、WebRTC 防泄露、🛑 广告 / 追踪（Loyalsoldier `reject`） → REJECT
 
@@ -100,23 +101,24 @@
 ## 规则集来源
 
 - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) — 主要规则集；国内直连用 `ChinaMax`（含 China、ChinaIPs 等全部国内规则）
-- [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) — `reject`（广告 / 追踪拦截）、`private`（局域网域名）、`apple`、`icloud`，每日构建。国内直连只用 blackmatrix7 ChinaMax：其说明要求引用 ChinaMax 后不再叠加其他国内规则，所以没有引用 Loyalsoldier `direct`、`cncidr`
+- [Loyalsoldier/surge-rules](https://github.com/Loyalsoldier/surge-rules) — `reject`（广告 / 追踪拦截）、`private`（局域网域名），每日构建。国内直连只用 blackmatrix7 ChinaMax：其说明要求引用 ChinaMax 后不再叠加其他国内规则，所以没有引用 Loyalsoldier `direct`、`cncidr`
 - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `cn.list` — 国内 AI 直连
-- 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `proxy`（包含 `gfw` 全部域名）、`telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，国内可直连的学术期刊、阿里云国际站等优先直连
+- 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，和国内列表重合的域名优先直连。Loyalsoldier `proxy` 有 2.7 万条，但只比 Global 多约 160 条，不再引用
+- 例外：B 站国际版 `bilibili.tv`、App Store 短链接 `appsto.re` 在被墙列表里，但上游 BiliBili、Apple 列表把它们算成直连，配置里单独让它们走 PROXY
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
 - 🤖 AI 服务（规则整体放在 `Microsoft.list` 之前，避免 Copilot 被 Ⓜ️ 微软服务提前匹配；Google 全系 `Google.list` 已合并入本组；国内 AI、字节的海外 AI 产品（Trae、MarsCode、Coze、Cici / Dola，走 🎵 TikTok）、国内公司 AI 的海外版（Qoder、Kimi、MiniMax，走 PROXY）不在此组）：
   - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
   - [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) `geosite:category-ai-!cn`，Shadowrocket 格式由 [ddranic/ios-proxy-rules](https://github.com/ddranic/ios-proxy-rules) 每日转换
-  - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) `OpenAI`、`Copilot`、`Gemini`、`Claude`
+  - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) `Copilot`（`OpenAI`、`Claude`、`Gemini` 三个列表已被其他列表完全覆盖，不再引用）
   - 上游 LingJingMaster `AI.list`（苹果智能等）
   - Notion：blackmatrix7 `Notion.list`、v2fly `geosite:notion`（ddranic 转换）。Notion 的附件存在 AWS S3，跟随 AWS 同样走本组
   - AWS：`amazonaws.com` 全部走本组（规则放在广告拦截之后、`Netflix.list` 之前）。例外：Netflix 自己的 AWS 地址走 🎬 Netflix，Grok Bot 附件桶直连，AWS 上的广告追踪地址仍拦截；AWS 中国区（`amazonaws.com.cn`）不受影响
   - `conf` 内手动补充上游未收录的域名：Kiro 的 `kiro.aws.dev`、Cognito 登录端点（来源 [Kiro 防火墙文档](https://kiro.dev/docs/privacy-and-security/firewalls/)）；Grok 的 `grokusercontent.com`、`spacex.ai`（来源 [xAI 登录域名文档](https://docs.x.ai/x-subscription/sign-in-domains)）；以及 Le Chat、Krea、Higgsfield、Luma、Black Forest Labs、Tensor.Art、Warp、TypingMind、ChatPDF、Elicit、Consensus
   - 注意：上游为保证 AI 服务完整可用，也收录了少量通用域名（如 `storage.googleapis.com`、`apis.google.com`、`intercom.io`，以及含 `sentry`、`datadog` 关键字的域名），这些流量同样会走 🤖 AI 服务
-- `Mail.list`、`Apple.list`、`HK_Broker.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
+- `Mail.list`、`Apple.list`、`HSBC_HK.list`、`HK_Banks_Direct.list` 等规则集来自上游 [LingJingMaster/Shadowrocket-Rules](https://github.com/LingJingMaster/Shadowrocket-Rules)
 - TikTok 规则集来自 blackmatrix7 `Shadowrocket/TikTok/TikTok.list`
 - Netflix 使用上游 RULE-SET：blackmatrix7 `Netflix.list`。它收录了 `us-west-2.amazonaws.com`（整个 AWS 美西区域）和 `cookielaw.org`、`onetrust.com`（OneTrust Cookie 弹窗，很多网站都在用），范围过大；`conf` 在它前面补了 Netflix 自己的 AWS 负载均衡地址（来源 v2fly `geosite:netflix`），再让 AWS 全部地址走 🤖 AI 服务、OneTrust 走 PROXY
-- 日本AV 使用上游 RULE-SET：mediacvg/ytnfst `jpav.list`（DMM / FANZA、duja、syukou-club、x-diablo 等），自动随上游更新；另有 `conf` 内手动补充的厂商 `DOMAIN-SUFFIX` 规则（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
+- 日本AV 全部是 `conf` 内的 `DOMAIN-SUFFIX` 规则：DMM / FANZA、duja、syukou-club、x-diablo 来自 mediacvg/ytnfst `jpav.list`（不再引用整份列表，因为它的 `DOMAIN-KEYWORD,dmm` 会把域名里带 dmm 的国内网站也带进日本AV 分组），以及手动补充的厂商（S1、Moodyz、IdeaPocket、SOD、Prestige、Faleno、Caribbeancom、Heyzo 等），来源：andyyippro/rule `JapanSites.list`、eric24lu/Surge `NSFW.list`、Travis0234/rules4mihomo `nsfw.list`；未包含聚合 / 盗版站
 - missav 使用上游 RULE-SET：sub-kek/shadowrocket-lists `shadowrocket/missav.list`；`javdb`、`javbus` 等聚合站仍为 `conf` 内的 `DOMAIN-SUFFIX` 规则
 
 ## Star History
