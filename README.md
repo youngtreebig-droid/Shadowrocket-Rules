@@ -32,8 +32,8 @@
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（首页当前选中的节点），可在分组里切换 |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
 | 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | 香港节点，可切换 |
-| 8 | 📹 油管视频（含 YouTube 翻译 API；放在谷歌之前，否则 googlevideo.com 视频流会被 `Google.list` 截走） | 香港节点 |
-| 9 | 🔍 谷歌与 Gemini（`Google.list` + VPSDance `google-ai.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 日本节点 |
+| 8 | （原 📹 油管视频，2026-11-13 起并入 🔍 谷歌与 Gemini；YouTube 规则集仍放在 `Google.list` 之前，否则 googlevideo.com 视频流会被截走） | 🔍 谷歌与 Gemini |
+| 9 | 🔍 谷歌与 Gemini（`Google.list` + VPSDance `google-ai.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 韩国节点 |
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Netflix.list` + Netflix 自己的 AWS 地址；修正了上游的过宽规则，AWS 改走 🤖 AI 服务、OneTrust Cookie 弹窗改走 PROXY） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
@@ -56,7 +56,7 @@
 - DNS：`dns-server` 用阿里和腾讯的加密 DNS（DoH）。它只用来查直连的网站，以及没被任何列表认出、要查到 IP 才能用 `GEOIP,CN` 判断的网站；走代理的网站由代理服务器在海外查，不经过它，所以不受 DNS 污染影响。用国内 DNS，国内网站拿到的是国内服务器地址，节点断了也能查。主 DNS 查询失败时才用 `fallback-dns-server`（Google，经代理）
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
-- 谷歌全系（`Google.list`）与 Gemini 单独走 🔍 谷歌与 Gemini（默认日本节点；原因：韩国节点被 Google 误判为香港，Gemini 不可用，且 ChatGPT / Claude 等仍可继续用韩国），排在 📹 油管视频之后、国内直连 `ChinaMax` 之前：油管视频流仍走 📹 油管视频，而 Google 搜索、登录（`accounts.youtube.com`、`apis.google.com`）、前端静态资源（`gstatic`、`recaptcha`）和自家统计（Firebase、Crashlytics、`gvt2.com` 等）全部与 Gemini 走同一个 🔍 谷歌与 Gemini 出口，既保证搜索里的 AI 概览 / AI 模式可用，又避免触发 Google "验证设备"；谷歌广告仍然拦截
+- 谷歌全系（`Google.list`，含 YouTube、Gmail、谷歌翻译等）与 Gemini 统一走 🔍 谷歌与 Gemini，默认韩国节点：首尔服务器已把谷歌和 Netflix 流量经 Cloudflare WARP 出口，谷歌识别为韩国（此前腾讯云 IP 被谷歌误判为香港，所以曾默认日本）
 - Speedtest 测速规则放在广告拦截和国内直连之前，走 📶 测速服务（默认 PROXY，即首页当前选中的节点），避免 `sgtm.ookla.com` 被拦截或测速连接在直连与代理之间分裂报错
 - 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - TikTok 自家域名（v2fly `tiktok` 和 `isnssdk.com`、`capcutapi.com` 等）放在广告拦截之前，统一走 🎵 TikTok：广告拦截列表会拦 TikTok 的私信、长连接、网络调度和安全 SDK，导致好友页、私信一直加载；TikTok 信息流广告和视频走同一组接口，按域名本来就拦不掉。TikTok 网页追踪像素（`analytics.tiktok.com`）、广告后台 `ads.tiktok.com` 和 Pangle 广告联盟继续拦截
@@ -71,11 +71,10 @@
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🤖 AI 服务（含 Notion、AWS） | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
-| 🔍 谷歌与 Gemini | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🔍 谷歌与 Gemini | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎵 TikTok | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
 | 💋 missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
-| 📹 油管视频 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | Ⓜ️ 微软服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 📶 测速服务 | PROXY（首页当前选中的节点） | 节点选择、DIRECT、REJECT、所有地区节点 |
 | 🐟 漏网之鱼 | 🇭🇰 香港节点 | PROXY、节点选择、DIRECT、REJECT、其他地区节点 |
