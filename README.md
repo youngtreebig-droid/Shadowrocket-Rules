@@ -25,7 +25,7 @@
 
 | 优先级 | 服务 | 默认策略 |
 |--------|------|----------|
-| 1 | 🧱 WebRTC 防泄露（UDP 3478 / 5349 / 19302-19309 的 STUN 流量） | 国内 IP 直连，其余 REJECT |
+| 1 | 🔗 Tailscale：自己 tailnet 的 `100.64.0.0/10`、`fd7a:115c:a1e0::/48`、`*.tailfc42a9.ts.net` → `TAILSCALE`（小火箭内置 Tailscale 模块）；其他 `ts.net`（Funnel 公网网站）、`tailscale.com`、`tailscale.io`（登录、控制服务器、DERP 中继）→ PROXY；STUN（UDP 3478）→ DIRECT | 见左 |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
 | 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
 | 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini） | 日本节点 |
@@ -55,6 +55,7 @@
 - 只匹配域名的规则放前面，含 IP 的规则（`IP-CIDR`、`GEOIP`）放最后。匹配 IP 前必须先做 DNS 解析，放在前面会让每个请求都先等解析，变慢
 - DNS：`dns-server` 用阿里和腾讯的加密 DNS（DoH）。它只用来查直连的网站，以及没被任何列表认出、要查到 IP 才能用 `GEOIP,CN` 判断的网站；走代理的网站由代理服务器在海外查，不经过它，所以不受 DNS 污染影响。用国内 DNS，国内网站拿到的是国内服务器地址，节点断了也能查。主 DNS 查询失败时才用 `fallback-dns-server`（Google，经代理）
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
+- Tailscale（2026-11-14）：iPhone 用小火箭内置 Tailscale 模块（设置 → Tailscale），`TAILSCALE` 是小火箭内置策略。`tun-excluded-routes` 不含 `100.64.0.0/10`，否则发往 tailnet 的包绕过小火箭隧道，模块接不到。tailnet 规则必须排在 blackmatrix7 `Lan` 之前，它把 `100.64.0.0/10` 和整个 `ts.net` 都算成直连。群晖转 Clash 配置时把 `TAILSCALE` 换成 `DIRECT`
 - 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
 - 谷歌全系（`Google.list`，含 YouTube、Gmail、谷歌翻译等）与 Gemini 统一走 🔍 谷歌与 Gemini，默认韩国节点：首尔服务器已把谷歌和 Netflix 流量经 Cloudflare WARP 出口，谷歌识别为韩国（此前腾讯云 IP 被谷歌误判为香港，所以曾默认日本）
 - Speedtest 测速规则放在广告拦截和国内直连之前，走 📶 测速服务（默认 PROXY，即首页当前选中的节点），避免 `sgtm.ookla.com` 被拦截或测速连接在直连与代理之间分裂报错
