@@ -6,7 +6,6 @@
 
 一份开箱即用的 小火箭 Shadowrocket 规则配置
 - 支持前沿的苹果智能（Apple Intelligence）
-- 谷歌搜索与 Gemini 可分到不同节点（默认搜索走香港、谷歌 AI 走韩国）
 - 导入后添加自己的节点或订阅即可使用
 
 ## 快速开始
@@ -29,13 +28,12 @@
 | 1 | 🔗 Tailscale：自己 tailnet 的 `100.64.0.0/10`、`fd7a:115c:a1e0::/48`、`*.tailfc42a9.ts.net` → `TAILSCALE`（小火箭内置 Tailscale 模块）；其他 `ts.net`（Funnel 公网网站）、`tailscale.com`、`tailscale.io`（登录、控制服务器、DERP 中继）→ PROXY；STUN（UDP 3478）→ DIRECT | 见左 |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
 | 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
-| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 搜索与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini、🤖 谷歌AI） | 日本节点 |
+| 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini） | 日本节点 |
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（首页当前选中的节点），可在分组里切换 |
 | 6 | 🛑 广告 / 追踪拦截（Loyalsoldier `reject` 约 19 万条 + blackmatrix7 `BlockHttpDNS`；Netflix / Spotify 风控与实验域名例外放行） | REJECT |
 | 7 | 📧 邮件服务（IMAP / POP3 / SMTP） | 香港节点，可切换 |
 | 8 | （原 📹 油管视频，2026-11-13 起并入 🔍 谷歌与 Gemini；YouTube 规则集仍放在 `Google.list` 之前，否则 googlevideo.com 视频流会被截走） | 🔍 谷歌与 Gemini |
-| 8a | 🤖 谷歌AI（Gemini / AI Studio / NotebookLM / Antigravity / Jules / Flow 等；静态常用域名 + VPSDance `google-ai.list`。必须放在 `Google.list` 和其它 AI 规则集之前。不含 `www.google.com`，搜索页 AI 模式无法单独拆出） | 韩国节点 |
-| 9 | 🔍 谷歌与 Gemini（`Google.list` + 登录 / 油管 / Gmail 等；搜索、登录、油管走此组，不再包含 Gemini） | 香港节点 |
+| 9 | 🔍 谷歌与 Gemini（`Google.list` + VPSDance `google-ai.list`；Google 搜索、登录、自家统计与 Gemini / AI Studio / NotebookLM / Antigravity 等同走此组，出口一致） | 韩国节点 |
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Netflix.list` + Netflix 自己的 AWS 地址；修正了上游的过宽规则，AWS 改走 🤖 AI 服务、OneTrust Cookie 弹窗改走 PROXY） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
@@ -59,7 +57,7 @@
 - 局域网规则的 IP 部分带 `no-resolve`，不会触发解析，所以可以放最前
 - Tailscale（2026-11-14）：iPhone 用小火箭内置 Tailscale 模块（设置 → Tailscale），`TAILSCALE` 是小火箭内置策略。`tun-excluded-routes` 不含 `100.64.0.0/10`，否则发往 tailnet 的包绕过小火箭隧道，模块接不到。tailnet 规则必须排在 blackmatrix7 `Lan` 之前，它把 `100.64.0.0/10` 和整个 `ts.net` 都算成直连。群晖转 Clash 配置时把 `TAILSCALE` 换成 `DIRECT`
 - 你自己的分组（AI、油管、TikTok、Netflix、Spotify、日本AV、missav、微软等）全部排在 Global 等境外代理列表之前，命中分组就按分组选的节点走，不会被改成 PROXY
-- 谷歌搜索、登录、油管、Gmail 等走 🔍 谷歌与 Gemini，默认香港节点，避开韩国法规要求的年龄验证 / 强制 SafeSearch。Gemini / AI Studio / NotebookLM 等走独立分组 🤖 谷歌AI，默认韩国节点（首尔 WARP）。搜索页里的「AI 模式」走的是 `www.google.com`，无法单独拆出，会跟着搜索走香港。同一账号在香港和韩国出口之间切换时，验证提示是否立刻消失需要实测
+- 谷歌全系（`Google.list`，含 YouTube、Gmail、谷歌翻译等）与 Gemini 统一走 🔍 谷歌与 Gemini，默认韩国节点：首尔服务器已把谷歌和 Netflix 流量经 Cloudflare WARP 出口，谷歌识别为韩国（此前腾讯云 IP 被谷歌误判为香港，所以曾默认日本）
 - Speedtest 测速规则放在广告拦截和国内直连之前，走 📶 测速服务（默认 PROXY，即首页当前选中的节点），避免 `sgtm.ookla.com` 被拦截或测速连接在直连与代理之间分裂报错
 - 抖音 / 字节跳动国内服务（blackmatrix7 `DouYin`、`ByteDance`）固定直连，并放在 🎵 TikTok 之前：blackmatrix7 `TikTok.list` 收录了抖音主域名 `snssdk.com`（抖音接口、支付、验证码、设备风控都在下面），不先直连会被当成 TikTok 走美国节点。字节的安全风控（`mssdk.bytedance.com`、`xlog.snssdk.com`）和网络调度（`tnc3-alisc1.bytedance.com`）不拦截；字节的广告和统计域名仍然拦截
 - TikTok 自家域名（v2fly `tiktok` 和 `isnssdk.com`、`capcutapi.com` 等）放在广告拦截之前，统一走 🎵 TikTok：广告拦截列表会拦 TikTok 的私信、长连接、网络调度和安全 SDK，导致好友页、私信一直加载；TikTok 信息流广告和视频走同一组接口，按域名本来就拦不掉。TikTok 网页追踪像素（`analytics.tiktok.com`）、广告后台 `ads.tiktok.com` 和 Pangle 广告联盟继续拦截
@@ -74,8 +72,7 @@
 | 🎬 Netflix | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎧 Spotify | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🤖 AI 服务（含 Notion、AWS） | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
-| 🤖 谷歌AI（Gemini / AI Studio / NotebookLM 等） | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
-| 🔍 谷歌与 Gemini（搜索、登录、油管等） | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
+| 🔍 谷歌与 Gemini | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎵 TikTok | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
 | 💋 missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
@@ -111,7 +108,7 @@
 - 境外代理：blackmatrix7 `Global`、`GlobalMedia`（流媒体），Loyalsoldier `telegramcidr`，统一走 PROXY；放在 ChinaMax 之后，和国内列表重合的域名优先直连。Loyalsoldier `proxy` 有 2.7 万条，但只比 Global 多约 160 条，不再引用
 - 例外：B 站国际版 `bilibili.tv`、App Store 短链接 `appsto.re` 在被墙列表里，但上游 BiliBili、Apple 列表把它们算成直连，配置里单独让它们走 PROXY
 - [iab0x00/ProxyRules](https://github.com/iab0x00/ProxyRules) — AI 服务补充规则
-- 🤖 AI 服务（规则整体放在 `Microsoft.list` 之前，避免 Copilot 被 Ⓜ️ 微软服务提前匹配；Google 搜索 / 登录 / 油管走 🔍 谷歌与 Gemini，Gemini 等谷歌 AI 走 🤖 谷歌AI；国内 AI、字节的海外 AI 产品（Trae、MarsCode、Coze、Cici / Dola，走 🎵 TikTok）、国内公司 AI 的海外版（Qoder、Kimi、MiniMax，走 PROXY）不在此组）：
+- 🤖 AI 服务（规则整体放在 `Microsoft.list` 之前，避免 Copilot 被 Ⓜ️ 微软服务提前匹配；Google 全系与 Gemini 不在本组，单独走 🔍 谷歌与 Gemini；国内 AI、字节的海外 AI 产品（Trae、MarsCode、Coze、Cici / Dola，走 🎵 TikTok）、国内公司 AI 的海外版（Qoder、Kimi、MiniMax，走 PROXY）不在此组）：
   - [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules) `rules/shadowrocket/global.list`：海外 AI 汇总，百余家厂商，每日同步
   - [v2fly/domain-list-community](https://github.com/v2fly/domain-list-community) `geosite:category-ai-!cn`，Shadowrocket 格式由 [ddranic/ios-proxy-rules](https://github.com/ddranic/ios-proxy-rules) 每日转换
   - [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) `Copilot`（`OpenAI`、`Claude`、`Gemini` 三个列表已被其他列表完全覆盖，不再引用）
