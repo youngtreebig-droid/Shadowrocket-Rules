@@ -27,7 +27,7 @@
 |--------|------|----------|
 | 1 | 🔗 Tailscale：自己 tailnet 的 `100.64.0.0/10`、`fd7a:115c:a1e0::/48`、`*.tailfc42a9.ts.net` → `TAILSCALE`（小火箭内置 Tailscale 模块）；其他 `ts.net`（Funnel 公网网站）、`tailscale.com`、`tailscale.io`（登录、控制服务器、DERP 中继）→ PROXY；STUN（UDP 3478）→ DIRECT | 见左 |
 | 2 | 🏠 局域网 / 私有网络（blackmatrix7 `Lan`、Loyalsoldier `private`） | DIRECT（固定） |
-| 3 | 微信、1Password 等精确直连；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
+| 3 | 微信、1Password 等精确直连；家庭群晖 DDNS `youngtree.synology.me`；国内 AI（通义、智谱、Kimi、豆包、DeepSeek 等，VPSDance `cn.list`）；抖音 / 字节的风控、网络调度等例外放行 | DIRECT（固定） |
 | 4 | 🤖 AI 服务（大陆需代理的海外 AI：ChatGPT / Codex、Claude / Claude Code、Grok / Grok Bot、Kiro、Notion、Copilot、Cursor、Windsurf、Perplexity、Mistral、Meta AI、Hugging Face、OpenRouter、Midjourney、Suno、ElevenLabs、苹果智能等百余家服务；Google 与 Gemini 不在此组，见下方 🔍 谷歌与 Gemini） | 日本节点 |
 | 5 | 📶 测速服务（Speedtest / Ookla / Fast.com / Cloudflare Speed，blackmatrix7 `Speedtest.list` + `ookla.com`） | PROXY（首页当前选中的节点），可在分组里切换 |
 | 6 | 广告 / 追踪拦截已移除；仅保留 App HTTPDNS 分流保护 | REJECT |
