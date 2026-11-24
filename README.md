@@ -37,7 +37,7 @@
 | 10 | 🎵 TikTok（抖音国际版 / CapCut 等） | 日本节点 |
 | 11 | 🎬 Netflix（blackmatrix7 `Netflix.list` + Netflix 自己的 AWS 地址；修正了上游的过宽规则，AWS 改走 🤖 AI 服务、OneTrust Cookie 弹窗改走 PROXY） | 香港节点 |
 | 12 | 🎧 Spotify（blackmatrix7 `Spotify.list`） | 香港节点 |
-| 13 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 日本节点 |
+| 13 | 🔞 日本AV（DMM / FANZA、S1、Moodyz 等片商） | 韩国节点（韩国入口，东京出口，与 🔍 谷歌与 Gemini 相同） |
 | 14 | 💋 missav（missav 及 JAV 聚合 / 在线观看站） | 香港节点 |
 | 15 | 哔哩哔哩 | DIRECT（固定） |
 | 16 | 📲 电报消息、🐱 代码托管（GitHub、GitLab、Atlassian） | PROXY（固定） |
@@ -73,7 +73,7 @@
 | 🤖 AI 服务（含 Notion、AWS） | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🔍 谷歌与 Gemini | 🇰🇷 韩国节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 🎵 TikTok | 🇯🇵 日本节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
-| 🔞 日本AV | 🇯🇵 日本节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
+| 🔞 日本AV | 🇰🇷 韩国节点（韩国入口，东京出口） | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
 | 💋 missav | 🇭🇰 香港节点 | PROXY、DIRECT、REJECT、节点选择、其他地区节点 |
 | Ⓜ️ 微软服务 | 🇭🇰 香港节点 | 节点选择、PROXY、DIRECT、REJECT、其他地区节点 |
 | 📶 测速服务 | PROXY（首页当前选中的节点） | 节点选择、DIRECT、REJECT、所有地区节点 |
